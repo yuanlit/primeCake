@@ -4,13 +4,23 @@
 
 const path = require('path')
 
+const URL ="https://bird.ioliu.cn";  //对外IP
+
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/apis': { // url里面要拼接进去
+        target:URL , // 需要代理接口域名
+        secure: false, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/apis': '' // 需要rewrite的,
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST

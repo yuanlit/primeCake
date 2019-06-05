@@ -34,17 +34,14 @@ ul {
   margin-top: 40px;
   text-align: center;
   width: 100%;
-  clear: both;
 }
 li {
   display: inline-block;
   margin: 0 10px;
-  cursor: pointer;
   float: left;
 }
 a {
   color: #42b983;
-  margin: 3px;
   text-decoration: none;
 }
 </style>
