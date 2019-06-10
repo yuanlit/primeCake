@@ -2,46 +2,54 @@
   <div id="app">
     <ul>
       <li v-for="(item,index) in nav" :key="index">
-          <router-link :to="item.path">{{item.name}}</router-link>
+          <router-link :to="item.path"><img :src="item.name"></router-link>
         </li>
     </ul>
   </div>
 </template>
 
 <script>
+var num = 1
 export default {
   name: 'HelloWorld',
   data () {
     return {
       nav: [
-        { name: '首页', path: '/index' },
-        { name: '新闻', path: '/news' },
-        { name: '信息', path: '/info' },
-        { name: '关于我们', path: '/about_me' },
-        { name: '联系我们', path: '/call_me' }
+        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-a-' + num + '.png', path: '/index' },
+        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-b-' + num + '.png', path: '/news' },
+        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-c-' + num + '.png', path: '/info' },
+        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-d-' + num + '.png', path: '/about_me' }
       ]
     }
   }
 }
 </script>
 
-<style scoped>
-ul {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  padding-bottom: 30px;
-  margin-top: 40px;
-  text-align: center;
+<style scoped lang= 'scss'>
+#app {
   width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+ul {
+  width: 100%;
+  height: r(86);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 1px solid #eee;
 }
 li {
   display: inline-block;
-  margin: 0 10px;
-  float: left;
+  text-align: center;
 }
 a {
-  color: #42b983;
-  text-decoration: none;
+  color: #333;
+
+}
+img {
+  width: 40%;
+  color: red;
 }
 </style>

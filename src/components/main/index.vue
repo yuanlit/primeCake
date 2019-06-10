@@ -8,6 +8,12 @@
       <mt-swipe-item>
         <a href="/act/2019-item-618?back=1"><img src="https://res.bestcake.com/m-images/CakeListConfig/749319704926346000.jpg" class="top-banner-li-img"></a>
       </mt-swipe-item>
+      <mt-swipe-item>
+        <a href="/act/2019-item-icenew?back=1"><img src="https://res.bestcake.com/m-images/banner_new/721590660285692000.jpg" class="top-banner-li-img"></a>
+      </mt-swipe-item>
+      <mt-swipe-item>
+        <a href="/act/xibing/wedding-cake?back=1"><img src="https://res.bestcake.com/m-images/banner_new/535769203549675970.jpg" class="top-banner-li-img"></a>
+      </mt-swipe-item>
       </mt-swipe>
     </div>
   </div>
@@ -30,12 +36,10 @@ export default {
   $color: red;
   #box01 {
     background: $color;
-    height: r(50*2);
   }
   .banner {
     width: 100%;
-    height: r(340);
-    background: blue;
+    height: r(380);
   }
   .top-banner-li-img {
     width: 100%;
