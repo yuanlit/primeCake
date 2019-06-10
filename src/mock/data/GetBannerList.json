@@ -1,0 +1,51 @@
+{
+    "Status": "ok",
+    "Msg": null,
+    "Tag": {
+      "List": [{
+        "ImgUrl": "/m-images/CakeListConfig/749319704926346000.jpg",
+        "LinkUrl": "/act/2019-item-618?back=1",
+        "Sort": 1,
+        "Status": 0,
+        "WapType": 2,
+        "CreateTime": "\/Date(1558505558267)\/",
+        "BrandType": 1,
+        "Title": "61活动",
+        "City": "上海,苏州,杭州,宁波,无锡,南京,北京,天津",
+        "ID": 265
+      }, {
+        "ImgUrl": "/m-images/banner_new/721590660285692000.jpg",
+        "LinkUrl": "/act/2019-item-icenew?back=1",
+        "Sort": 3,
+        "Status": 0,
+        "WapType": 2,
+        "CreateTime": "\/Date(1558694236643)\/",
+        "BrandType": 1,
+        "Title": "冰淇淋",
+        "City": "上海,苏州,常州,杭州,宁波,无锡,南京,绍兴,嘉兴",
+        "ID": 269
+      }, {
+        "ImgUrl": "/m-images/banner_new/535769203549675970.jpg",
+        "LinkUrl": "/act/xibing/wedding-cake?back=1",
+        "Sort": 5,
+        "Status": 0,
+        "WapType": 2,
+        "CreateTime": "\/Date(1553849228557)\/",
+        "BrandType": 1,
+        "Title": "喜饼活动",
+        "City": "上海,常州,苏州,杭州,宁波,无锡,南京,绍兴,嘉兴",
+        "ID": 252
+      }, {
+        "ImgUrl": "/m-images/banner_new/368311689846465800.jpg?v=2",
+        "LinkUrl": "/act/2019-item-entrance",
+        "Sort": 6,
+        "Status": 0,
+        "WapType": 2,
+        "CreateTime": "\/Date(1547027697023)\/",
+        "BrandType": 1,
+        "Title": "大礼包兑换",
+        "City": "上海,苏州,杭州,无锡,南京,北京,绍兴",
+        "ID": 228
+      }]
+    }
+  }

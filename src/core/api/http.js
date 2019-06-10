@@ -1,5 +1,4 @@
 import axios from 'axios'
-// const URL ="https://bird.ioliu.com";
 // "localhost:8899"
 const baseURL = location.host.indexOf('.com') !== -1 ? '' : '/apis'
 

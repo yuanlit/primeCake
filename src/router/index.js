@@ -16,6 +16,9 @@ const router = new VueRouter({
       children: [
         { path: 'index',
           name: 'index',
+          meta: {
+            keepAlive: true
+          },
           component: resolve => require(['@/components/main/index'], resolve) },
         { path: 'news',
           name: 'news',

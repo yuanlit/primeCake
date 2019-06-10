@@ -4,7 +4,7 @@
 
 const path = require('path')
 
-const URL ="https://bird.ioliu.cn";  //对外IP
+const URL = 'http://m.bestcake.com';  //对外IP
 
 module.exports = {
   dev: {

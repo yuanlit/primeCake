@@ -28,17 +28,19 @@ export default {
 <style scoped lang= 'scss'>
 #app {
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  z-index: 1001;
 }
 ul {
   width: 100%;
   height: r(86);
   display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   align-items: center;
   justify-content: space-around;
   border-top: 1px solid #eee;
+  background: white;
 }
 li {
   display: inline-block;
