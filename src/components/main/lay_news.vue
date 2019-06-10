@@ -4,6 +4,9 @@
     <router-link :to="{name: 'other_news'}">国外新闻</router-link>
     <router-link :to="{name: 'china_news'}">国内新闻</router-link>
     <router-view></router-view>
+     <div>{{$store.state.num}}</div>
+     <div>{{$store.state.price}}</div>
+     <button @click='add'>add</button>
   </div>
 </template>
 
@@ -13,6 +16,12 @@ export default {
   data () {
     return {
       msg: ''
+    }
+  },
+  extends: {
+    add (){
+      console.log('ok')
+      $store.mutations();
     }
   },
   // 局部路由根methods是一个级别

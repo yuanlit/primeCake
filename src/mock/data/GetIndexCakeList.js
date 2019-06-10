@@ -1,11 +1,4 @@
-<script>
-export default {
-    data () {
-        return [
-            {
-    "Status": "ok",
-    "Msg": "error",
-    "Tag": {
+const cakelist = {
       "list": [{
         "TabType": 4,
         "DesName": "魔法猜心",
@@ -2308,9 +2301,4 @@ export default {
         "IsPush": 1
       }]
     }
-  }
-  
-        ]
-    }
-}
-</script>
+exprot {cakelist}

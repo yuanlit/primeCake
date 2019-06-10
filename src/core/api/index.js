@@ -1,7 +1,7 @@
 import request from './http'
 // var pox = '/apis'
 // import axios from 'axios'
-import axios from '@/mock/mock'
+// import axios from '@/mock/mock'
 // 直接引入没有配置的axios,如下,发送一个get请求到/success
 // axios.get('/success').then((res) => {
 //   console.log(res)

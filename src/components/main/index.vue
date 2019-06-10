@@ -118,10 +118,55 @@
       </div>
     </div>
     <img src="https://res.bestcake.com/m-images-2/mofa.png" class="special">
-
-    <div class="special-title" style="margin-bottom: 4.26667vw;">
-            任选一款，走进你的心
+    <div class="special-title">任选一款，走进你的心</div>
+    <div class="mofa-tab">
+      <div class="selected">送恋人</div>
+      <div class>送挚友</div>
+      <div class>送长者</div>
+      <div class>送亲子</div>
     </div>
+    <div class="mofa-list">
+      <div class="mofa-cake">
+        <img
+          src="https://res.bestcake.com/m-images/CakeListConfig/697050411817742300.jpg"
+          class="mofa-img"
+        >
+        <div class="mofa-name">许愿天使</div>
+        <div class="mofa-price">
+          <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
+          <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">298</span>
+          <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 2.2磅</span>
+        </div>
+      </div>
+      <div class="mofa-cake">
+        <img
+          src="https://res.bestcake.com/m-images/CakeListConfig/284816958668199900.jpg"
+          class="mofa-img"
+        >
+        <div class="mofa-name">露水茶颜</div>
+        <div class="mofa-price">
+          <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
+          <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">218</span>
+          <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
+        </div>
+      </div>
+      <div class="mofa-cake">
+        <img
+          src="https://res.bestcake.com/m-images/CakeListConfig/341579704018727000.jpg"
+          class="mofa-img"
+        >
+        <div class="mofa-name">草莓拿破仑</div>
+        <div class="mofa-price">
+          <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
+          <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">218</span>
+          <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
+        </div>
+      </div>
+    </div>
+    <img src="https://res.bestcake.com/m-images-2/pinzhi.png" class="special">
+    <div class="special-title">没尝过这些美味的人生，是不完美的</div>
+
+    <!-- tab栏 -->
   </div>
 </template>
 
@@ -132,24 +177,23 @@ axios.get("/GetIndexCakeList").then(res => {
 });
 export default {
   mounted() {
-    // var data01 = {
-    //   v: '1560132853890',
-    //   c: 'PhotoListCenter',
-    //   m: 'GetPhotoLIst',
-    //   Type: 2,
-    //   AdvertisingType: 1
-    // }
-    // this.$apis.GetPhotoLIst(data01).then((res) => {
-    //   console.log(res)
-    //   this.msg = res.data
-    // })
+    var data01 = {
+      v: '1560132853890',
+      c: 'PhotoListCenter',
+      m: 'GetPhotoLIst',
+      Type: 2,
+      AdvertisingType: 1
+    }
+    this.$apis.GetPhotoLIst(data01).then((res) => {
+      console.log(res)
+      this.msg = res.data
+    })
   }
 };
 </script>
 
 <style scoped lang='scss'>
 #app01 {
-
 }
 #city {
   padding-left: r(15);
@@ -211,7 +255,7 @@ export default {
   justify-content: space-between;
   border-bottom: r(25) solid #fafafa;
   div {
-    width: 49%; 
+    width: 49%;
     a {
       width: 100%;
       img {
@@ -220,17 +264,36 @@ export default {
     }
   }
 }
-// 魔法菜心了
-.special-title,.special {
+// 魔法菜心
+.special-title,
+.special {
   width: 100%;
 }
 .special-title {
   height: r(39);
   width: 100%;
-  border: 1px solid red;
   text-align: center;
   color: #999;
   font-size: 3.2vw;
+  margin-bottom: r(30);
 }
-
+.mofa-tab {
+  display: flex;
+  justify-content: space-around;
+  height: r(59);
+  z-index: 1002;
+  div {
+    width: r(120);
+    height: r(59);
+    line-height: r(50);
+    text-align: center;
+    background: url(https://res.bestcake.com/m-images-2/mofa-1.png) no-repeat
+      center center;
+    background-size: 100% 100%;
+  }
+  .selected {
+    background-image: url(https://res.bestcake.com/m-images-2/mofa-2.png);
+    color: #fff;
+  }
+}
 </style>

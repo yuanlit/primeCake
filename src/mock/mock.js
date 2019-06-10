@@ -1,6 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import GetIndexCakeList from '@/mock/data/GetIndexCakeList.vue'
+import GetIndexCakeList from '@/mock/data/GetIndexCakeList_kong.vue'
 let mock = new MockAdapter(axios)
 
 // 可以设置,延迟时间
