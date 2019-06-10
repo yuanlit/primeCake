@@ -1,7 +1,10 @@
 <template>
   <div>
     <layHead></layHead>
-    <router-view/>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"/>
+    </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"/>
   </div>
 </template>
 
@@ -12,6 +15,7 @@ export default {
     layHead
   }
 }
+
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang= 'scss'>

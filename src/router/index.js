@@ -8,6 +8,9 @@ const router = new VueRouter({
     {
       path: '/',
       name: '/',
+      meta: {
+        keepAlive: true
+      },
       component: resolve => require(['@/components/home'], resolve),
       redirect: '/index',
       children: [
