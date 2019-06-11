@@ -28,7 +28,7 @@
     </div>
     <!-- 广告区 -->
     <div class="guanggao">
-      <div  class="guanggao_box" v-for="(item, index) in icoImgList01" :key="index">
+      <div class="guanggao_box" v-for="(item, index) in icoImgList01" :key="index">
         <a :href="item.proUrl">
           <img :src="item.ImgUrl">
         </a>
@@ -38,58 +38,67 @@
           <a :href="item.proUrl">
             <img :src="item.ImgUrl">
           </a>
-      </div>
-      </div>
-    </div>
-    <img src="https://res.bestcake.com/m-images-2/mofa.png" class="special">
-    <div class="special-title">任选一款，走进你的心</div>
-    <div class="mofa-tab">
-      <div class="selected">送恋人</div>
-      <div class>送挚友</div>
-      <div class>送长者</div>
-      <div class>送亲子</div>
-    </div>
-    <div class="mofa-list">
-      <div class="mofa-cake">
-        <img
-          src="https://res.bestcake.com/m-images/CakeListConfig/697050411817742300.jpg"
-          class="mofa-img"
-        >
-        <div class="mofa-name">许愿天使</div>
-        <div class="mofa-price">
-          <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
-          <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">298</span>
-          <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 2.2磅</span>
-        </div>
-      </div>
-      <div class="mofa-cake">
-        <img
-          src="https://res.bestcake.com/m-images/CakeListConfig/284816958668199900.jpg"
-          class="mofa-img"
-        >
-        <div class="mofa-name">露水茶颜</div>
-        <div class="mofa-price">
-          <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
-          <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">218</span>
-          <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
-        </div>
-      </div>
-      <div class="mofa-cake">
-        <img
-          src="https://res.bestcake.com/m-images/CakeListConfig/341579704018727000.jpg"
-          class="mofa-img"
-        >
-        <div class="mofa-name">草莓拿破仑</div>
-        <div class="mofa-price">
-          <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
-          <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">218</span>
-          <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
         </div>
       </div>
     </div>
+    <div class="mofa-box">
+      <!-- 魔法猜心 -->
+      <img src="https://res.bestcake.com/m-images-2/mofa.png" class="special">
+      <div class="special-title">任选一款，走进你的心</div>
+      <!-- 魔发猜心tab栏 -->
+      <div class="mofa-tab">
+        <div
+          v-for="(item, index) in tabClass"
+          :key="index"
+          @click="setTab(index)"
+          :class="{selected:tabActive==index}"
+        >{{item}}</div>
+      </div>
+      <!-- 魔法猜心商品列表 -->
+      <div class="mofa-list">
+        <div class="mofa-cake" v-for="(item, index) in activeList" :key="index">
+          <img :src="item.ImgUrl" class="mofa-img">
+          <div class="mofa-name">{{item.Name}}</div>
+          <div class="mofa-price">
+            <span>￥</span>
+            <span>{{item.CurrentPrice}}</span>
+            <i>/ {{item.Size}}</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -------------------------------品质甄选--------------------- -->
     <img src="https://res.bestcake.com/m-images-2/pinzhi.png" class="special">
     <div class="special-title">没尝过这些美味的人生，是不完美的</div>
-    <!-- tab栏 -->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~ 品质甄选商品列表 ~~~~~~~~~~~~-->
+    <div class="pinzhi-list" v-for="(item, index) in goodsList" :key="index">
+      <div class="pinzhi-img">
+        <img :src="item.ImgUrl">
+      </div>
+      <div class="pinzhi-detail">
+        <div class="pinzhi-name">{{item.Name}}</div>
+        <div class="pinzhi-info">{{item.MoreUrl}}</div>
+        <div class="pinzhi-tip">
+          <img src="https://res.bestcake.com/m-images-2/icon_zy.png">
+        </div>
+        <div class="pinzhi-price">
+          <div>
+            <label style="font-weight: inherit;">
+              <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
+              <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">218</span>
+              <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">.00</span>
+            </label>
+            <span
+              style="color: rgb(153, 153, 153); font-size: 3.2vw; margin-left: 1.067vw; text-decoration: line-through; display: none;"
+            >￥218</span>
+            <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
+          </div>
+        </div>
+      </div>
+      <div id="shopCart" class="pinzhi-cart">
+        <img src="https://res.bestcake.com/m-images-2/pinzhi-cart.png">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -129,7 +138,13 @@ export default {
           ImgUrl: "https://res.bestcake.com/m-images-2/guanggao3.png",
           proUrl: "/ns/ns-cake-page?pname=星光游乐园"
         }
-      ]
+      ],
+      // 魔法猜心tab栏
+      tabClass: ["送恋人", "送挚友", "送长者", "送亲子"],
+      tabList: [],
+      activeList: [],
+      tabActive: 0,
+      goodsList: []
     };
   },
   mounted() {
@@ -146,10 +161,38 @@ export default {
       // 获取icon的数据
       var iconData = res.data.Tag.iconList.slice(0, 8);
       this.iconList = iconData;
-      console.log(this.iconList);
+      // console.log(this.iconList);
+      // 获取tab栏数据
+      res.data.Tag.list.forEach(item => {
+        if (item.TabType == 4) {
+          this.tabList.push(item);
+        } else {
+          this.goodsList.push(item);
+        }
+      });
+      // 初始化的时候,选定第一组数据
+      this.setTab(0);
     });
   },
   methods: {
+    setTab(index) {
+      // console.log(key);
+      // this.tabActive=index;
+      // console.log();
+      var activeList = [];
+      // console.log(this.tabClass[index])
+      this.tabList.forEach(item => {
+        // console.log(item.ActiveName)
+        if (this.tabClass[index] == item.ActiveName) {
+          activeList.push(item);
+        }
+      });
+      this.activeList = activeList.slice(0, 3);
+      // console.log(this.activeList);
+      this.tabActive = index;
+      // console.log(this.tabActive);
+    },
+    // =----------------------------以下为调取接口---------------------------
     // 调取轮播接口
     GetBannerList(callback) {
       var data = {
@@ -266,25 +309,60 @@ export default {
   margin-bottom: r(30);
 }
 
-.mofa-tab {
-  display: flex;
-  justify-content: space-around;
-  height: r(59);
-  z-index: 1002;
-
-  div {
-    width: r(120);
+.mofa-box {
+  .mofa-tab {
+    display: flex;
+    justify-content: space-around;
     height: r(59);
-    line-height: r(50);
-    text-align: center;
-    background: url(https://res.bestcake.com/m-images-2/mofa-1.png) no-repeat
-      center center;
-    background-size: 100% 100%;
-  }
+    z-index: 2;
 
-  .selected {
-    background-image: url(https://res.bestcake.com/m-images-2/mofa-2.png);
-    color: #fff;
+    div {
+      width: r(135);
+      height: r(59);
+      line-height: r(50);
+      text-align: center;
+      background: url(https://res.bestcake.com/m-images-2/mofa-1.png) no-repeat
+        center center;
+      background-size: 100% 100%;
+    }
+
+    .selected {
+      background-image: url(https://res.bestcake.com/m-images-2/mofa-2.png);
+      color: #fff;
+    }
+  }
+  .mofa-list {
+    width: 100%;
+    display: flex;
+    border-bottom: r(30) solid #fafafa;
+    padding-bottom: r(32);
+    .mofa-cake {
+      flex: 1;
+      text-align: center;
+      img {
+        width: 80%;
+        height: r(180);
+      }
+      .mofa-name {
+        color: #333;
+        font-size: r(18);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .mofa-price {
+        span {
+          color: rgb(255, 51, 0);
+          font-size: 4.267vw;
+        }
+        i {
+          font-style: normal;
+          color: rgb(212, 212, 212);
+          font-size: 3.2vw;
+          margin-left: 1.067vw;
+        }
+      }
+    }
   }
 }
 </style>
