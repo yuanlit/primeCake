@@ -1,4 +1,6 @@
 import request from './http'
+
+// ------------------------------------mock
 // var pox = '/apis'
 // import axios from 'axios'
 // import axios from '@/mock/mock'
@@ -6,30 +8,27 @@ import request from './http'
 // axios.get('/success').then((res) => {
 //   console.log(res)
 // })
-
+// ------------------------------------mock
+var url01 = '/json1811.ashx'
 class Apis {
-  // joke (data) {
-  //   return request({
-  //     method: 'get',
-  //     url: '/joke',
-  //     params: data
-  //   })
-  // }
-  // getServerStr () {
-  //   return request({
-  //     method: 'post',
-  //     url: '/json.php',
-  //     data: {
-  //       uname: 'Msea',
-  //       upwd: '1234565'
-  //     }
-  //   })
-  // }
-  GetPhotoLIst (data) {
+  // 轮播的接口
+  GetBannerList (data) {
     return request({
       method: 'get',
-      url: '/json1811.ashx',
+      url: url01,
       params: data
+    })
+  }
+  // 首页商品数据接口
+  GetIndexCakeList () {
+    return request({
+      method: 'get',
+      url: url01,
+      params: {
+        m: 'GetIndexCakeList',
+        v: '1560219368002',
+        c: 'Index'
+      }
     })
   }
 }

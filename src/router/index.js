@@ -20,27 +20,27 @@ const router = new VueRouter({
             keepAlive: true
           },
           component: resolve => require(['@/components/main/index'], resolve) },
-        { path: 'news',
-          name: 'news',
-          component: resolve => require(['@/components/main/lay_news'], resolve),
+        { path: 'classify',
+          name: 'classify',
+          component: resolve => require(['@/components/main/classify'], resolve),
           children: [
-            { path: '/news/china_news',
+            { path: '/classify/china_news',
               name: 'china_news',
               component: resolve => require(['@/components/children/china_news'], resolve) },
-            { path: '/news/other_news',
+            { path: '/classify/other_news',
               name: 'other_news',
               component: resolve => require(['@/components/children/other_news'], resolve) }
           ]
         },
-        { path: 'info',
-          name: 'info',
-          component: resolve => require(['@/components/main/lay_info'], resolve) },
+        { path: 'cartList',
+          name: 'cartList',
+          component: resolve => require(['@/components/main/cartList'], resolve) },
         { path: 'about_me',
           name: 'about_me',
-          component: resolve => require(['@/components/main/about_me'], resolve) },
-        { path: 'call_me',
-          name: 'call_me',
-          component: resolve => require(['@/components/main/call_me'], resolve) }
+          component: resolve => require(['@/components/main/mine'], resolve) },
+        { path: 'mine',
+          name: 'mine',
+          component: resolve => require(['@/components/main/mine'], resolve) }
       ]
     }
   ]

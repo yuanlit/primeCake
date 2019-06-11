@@ -5,116 +5,40 @@
     </div>
     <div class="banner">
       <mt-swipe :auto="4000">
-        <mt-swipe-item>
-          <a href="/act/2019-item-entrance">
-            <img
-              src="https://res.bestcake.com/m-images/banner_new/368311689846465800.jpg?v=2"
-              class="top-banner-li-img"
-            >
-          </a>
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <a href="/act/2019-item-618?back=1">
-            <img
-              src="https://res.bestcake.com/m-images/CakeListConfig/749319704926346000.jpg"
-              class="top-banner-li-img"
-            >
-          </a>
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <a href="/act/2019-item-icenew?back=1">
-            <img
-              src="https://res.bestcake.com/m-images/banner_new/721590660285692000.jpg"
-              class="top-banner-li-img"
-            >
-          </a>
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <a href="/act/xibing/wedding-cake?back=1">
-            <img
-              src="https://res.bestcake.com/m-images/banner_new/535769203549675970.jpg"
-              class="top-banner-li-img"
-            >
+        <mt-swipe-item v-for="(item, index) in bannerList" :key="index">
+          <a :href="item.LinkUrl">
+            <img :src="item.ImgUrl" class="top-banner-li-img">
           </a>
         </mt-swipe-item>
       </mt-swipe>
     </div>
-    <!-- 以上為banner圖 -->
+    <!-- 以上为轮播图 -->
     <div class="banner-icon">
       <!-- <div class="loading" style="display: none;">
         <label>加载中...</label>
       </div>-->
-      <div class="icon-box">
-        <a href="/act/2019-item-618?back=1">
+      <div class="icon-box" v-for="(item, index) in iconList" :key="index">
+        <a :href="item.ProUrl">
           <div class="icon-img">
-            <img src="https://res.bestcake.com/m-images/banner_new/364607927039034560.jpg">
+            <img :src="item.ImgUrl">
           </div>
         </a>
-        <div class="icon-title">618钜献</div>
-      </div>
-      <div class="icon-box">
-        <a href="/act/2019-item-entrance">
-          <div class="icon-img">
-            <img src="https://res.bestcake.com/m-images/banner_new/538207660850250200.jpg">
-          </div>
-        </a>
-        <div class="icon-title">大礼包兑换</div>
-      </div>
-      <div class="icon-box">
-        <a href="/n/list?filtername=jz">
-          <div class="icon-img">
-            <img src="https://res.bestcake.com/m-images/banner_new/339358287107534000.jpg">
-          </div>
-        </a>
-        <div class="icon-title">贝思客优选</div>
-      </div>
-      <div class="icon-box">
-        <a href="/n/list?filtername=jd">
-          <div class="icon-img">
-            <img src="https://res.bestcake.com/m-images/banner_new/12077535670548922.jpg">
-          </div>
-        </a>
-        <div class="icon-title">订蛋糕</div>
-      </div>
-      <div class="icon-box">
-        <a href="/card/index">
-          <div class="icon-img">
-            <img src="https://res.bestcake.com/m-images/banner_new/706848964689883300.jpg">
-          </div>
-        </a>
-        <div class="icon-title">代金卡下单</div>
-      </div>
-      <div class="icon-box">
-        <a href="/n/list?filtername=rp">
-          <div class="icon-img">
-            <img src="https://res.bestcake.com/m-images/banner_new/18052208933946324.jpg">
-          </div>
-        </a>
-        <div class="icon-title">冰淇淋</div>
-      </div>
-      <div class="icon-box">
-        <a href="http://m.bestcake.com/act/2019-item-vote?back=1">
-          <div class="icon-img">
-            <img src="https://res.bestcake.com/m-images/banner_new/988173501678991200.jpg">
-          </div>
-        </a>
-        <div class="icon-title">问卷小调查</div>
+        <div class="icon-title">{{item.ActName}}</div>
       </div>
     </div>
     <!-- 广告区 -->
     <div class="guanggao">
-      <div>
-        <a href="/ns/ns-cake-page?pname=宠爱少女">
-          <img src="https://res.bestcake.com/m-images-2/guanggao1.png?v=0419">
+      <div  class="guanggao_box" v-for="(item, index) in icoImgList01" :key="index">
+        <a :href="item.proUrl">
+          <img :src="item.ImgUrl">
         </a>
       </div>
-      <div>
-        <a href="/ns/ns-cake-page?pname=贝丽">
-          <img src="https://res.bestcake.com/m-images-2/guangao22.png?v=0419">
-        </a>
-        <a href="/ns/ns-cake-page?pname=星光游乐园">
-          <img src="https://res.bestcake.com/m-images-2/guanggao3.png">
-        </a>
+      <div class="guanggao_box">
+        <div v-for="(item, index) in icoImgList02" :key="index">
+          <a :href="item.proUrl">
+            <img :src="item.ImgUrl">
+          </a>
+      </div>
       </div>
     </div>
     <img src="https://res.bestcake.com/m-images-2/mofa.png" class="special">
@@ -165,36 +89,91 @@
     </div>
     <img src="https://res.bestcake.com/m-images-2/pinzhi.png" class="special">
     <div class="special-title">没尝过这些美味的人生，是不完美的</div>
-
     <!-- tab栏 -->
   </div>
 </template>
 
 <script>
-import axios from "@/mock/mock";
-axios.get("/GetIndexCakeList").then(res => {
-  console.log(res);
-});
+// mock--------------------------mock
+// import axios from "@/mock/mock";
+// axios.get("/GetIndexCakeList").then(res => {
+//   // console.log(res);
+// });
+// mock--------------------------mock
 export default {
+  data() {
+    return {
+      // 轮播数据
+      bannerList: [],
+      // 8个ICO数据
+      iconList: [],
+      // 3张焦点图数据
+      icoImgList01: [
+        {
+          name: "宠爱少女",
+          key: "宠爱少女",
+          ImgUrl: "https://res.bestcake.com/m-images-2/guanggao1.png?v=0419",
+          proUrl: "/ns/ns-cake-page?pname=宠爱少女"
+        }
+      ],
+      icoImgList02: [
+        {
+          name: "小猪蛋糕-贝丽",
+          key: "贝丽",
+          ImgUrl: "https://res.bestcake.com/m-images-2/guangao22.png?v=0419",
+          proUrl: "/ns/ns-cake-page?pname=星光游乐园"
+        },
+        {
+          name: "星光游乐园",
+          key: "星光游乐园",
+          ImgUrl: "https://res.bestcake.com/m-images-2/guanggao3.png",
+          proUrl: "/ns/ns-cake-page?pname=星光游乐园"
+        }
+      ]
+    };
+  },
   mounted() {
-    var data01 = {
-      v: '1560132853890',
-      c: 'PhotoListCenter',
-      m: 'GetPhotoLIst',
-      Type: 2,
-      AdvertisingType: 1
+    // banner图的数据处理,并赋值给bannerList
+    this.GetBannerList(res => {
+      res.forEach(item => {
+        item.ImgUrl = "https://res.bestcake.com/" + item.ImgUrl;
+      });
+      this.bannerList = res;
+    });
+    // 获取主页的数据
+    this.GetIndexCakeList(res => {
+      console.log(res);
+      // 获取icon的数据
+      var iconData = res.data.Tag.iconList.slice(0, 8);
+      this.iconList = iconData;
+      console.log(this.iconList);
+    });
+  },
+  methods: {
+    // 调取轮播接口
+    GetBannerList(callback) {
+      var data = {
+        v: "1560219844410",
+        c: "Index",
+        m: "GetBannerList",
+        Type: 2,
+        City: "苏州"
+      };
+      this.$apis.GetBannerList(data).then(res => {
+        callback(res.data.Tag.List);
+      });
+    },
+    // 调用首页商品数据
+    GetIndexCakeList(callback) {
+      this.$apis.GetIndexCakeList().then(res => {
+        callback(res);
+      });
     }
-    this.$apis.GetPhotoLIst(data01).then((res) => {
-      console.log(res)
-      this.msg = res.data
-    })
   }
 };
 </script>
 
 <style scoped lang='scss'>
-#app01 {
-}
 #city {
   padding-left: r(15);
   text-align: center;
@@ -212,10 +191,12 @@ export default {
   font-size: r(32);
   border-radius: 0 r(6) r(6) 0;
 }
+
 .banner {
   width: 100%;
-  height: r(380);
+  height: r(190 * 2);
 }
+
 .banner-icon {
   display: flex;
   flex-wrap: wrap;
@@ -224,20 +205,24 @@ export default {
 
   .icon-box {
     width: 25%;
+
     a {
       div {
         text-align: center;
+
         img {
           width: r(132);
         }
       }
     }
+
     .icon-title {
       text-align: center;
       margin: -r(18) 0 r(18);
     }
   }
 }
+
 .top-banner-li-img {
   width: 100%;
   height: 100%;
@@ -254,21 +239,24 @@ export default {
   display: flex;
   justify-content: space-between;
   border-bottom: r(25) solid #fafafa;
-  div {
+  .guanggao_box {
     width: 49%;
     a {
       width: 100%;
+
       img {
         width: 100%;
       }
     }
   }
 }
+
 // 魔法菜心
 .special-title,
 .special {
   width: 100%;
 }
+
 .special-title {
   height: r(39);
   width: 100%;
@@ -277,11 +265,13 @@ export default {
   font-size: 3.2vw;
   margin-bottom: r(30);
 }
+
 .mofa-tab {
   display: flex;
   justify-content: space-around;
   height: r(59);
   z-index: 1002;
+
   div {
     width: r(120);
     height: r(59);
@@ -291,6 +281,7 @@ export default {
       center center;
     background-size: 100% 100%;
   }
+
   .selected {
     background-image: url(https://res.bestcake.com/m-images-2/mofa-2.png);
     color: #fff;

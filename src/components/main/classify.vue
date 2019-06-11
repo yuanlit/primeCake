@@ -6,7 +6,7 @@
     <router-view></router-view>
      <div>{{$store.state.num}}</div>
      <div>{{$store.state.price}}</div>
-     <button @click='add'>add</button>
+     <button>add</button>
   </div>
 </template>
 

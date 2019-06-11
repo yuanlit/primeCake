@@ -2,8 +2,8 @@
   <div id="app">
     <ul>
       <li v-for="(item,index) in nav" :key="index">
-          <router-link :to="item.path"><img :src="item.name"></router-link>
-        </li>
+        <router-link :to="item.path"><img :src="item.url"></router-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -15,10 +15,10 @@ export default {
   data () {
     return {
       nav: [
-        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-a-' + num + '.png', path: '/index' },
-        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-b-' + num + '.png', path: '/news' },
-        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-c-' + num + '.png', path: '/info' },
-        { name: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-d-' + num + '.png', path: '/about_me' }
+        { url: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-a-' + num + '.png', path: '/index' },
+        { url: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-b-' + num + '.png', path: '/classify' },
+        { url: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-c-' + num + '.png', path: '/cartList' },
+        { url: 'https://res.bestcake.com/m-images/ww/foot/foot-menu-d-' + num + '.png', path: '/mine' }
       ]
     }
   }

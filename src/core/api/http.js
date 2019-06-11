@@ -2,15 +2,6 @@ import axios from 'axios'
 // "localhost:8899"
 const baseURL = location.host.indexOf('.com') !== -1 ? '' : '/apis'
 
-// console.log(baseURL)
-// 区分
-// 本地环境
-// 例如:
-// localhost  127.0.0.1 xxx.xxx.xxx
-// 生产环境
-// www.baidu.com
-// url:baseURL+"/index"
-
 let ajaxConfig = {
   baseURL,
   timeout: 20000,
