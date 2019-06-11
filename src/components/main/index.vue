@@ -28,16 +28,17 @@
     </div>
     <!-- 广告区 -->
     <div class="guanggao">
-      <div class="guanggao_box" v-for="(item, index) in icoImgList01" :key="index">
-        <a :href="item.proUrl">
-          <img :src="item.ImgUrl">
-        </a>
+      <div
+        class="guanggao_box"
+        v-for="(item, index) in icoImgList01"
+        :key="index"
+        @click="toShow(item.key,'ns')"
+      >
+        <img :src="item.ImgUrl">
       </div>
       <div class="guanggao_box">
-        <div v-for="(item, index) in icoImgList02" :key="index">
-          <a :href="item.proUrl">
-            <img :src="item.ImgUrl">
-          </a>
+        <div v-for="(item, index) in icoImgList02" :key="index" @click="toShow(item.key,'ns')">
+          <img :src="item.ImgUrl">
         </div>
       </div>
     </div>
@@ -56,7 +57,12 @@
       </div>
       <!-- 魔法猜心商品列表 -->
       <div class="mofa-list">
-        <div class="mofa-cake" v-for="(item, index) in activeList" :key="index">
+        <div
+          class="mofa-cake"
+          v-for="(item, index) in activeList"
+          :key="index"
+          @click="toShow(item.Name,'list')"
+        >
           <img :src="item.ImgUrl" class="mofa-img">
           <div class="mofa-name">{{item.Name}}</div>
           <div class="mofa-price">
@@ -71,38 +77,55 @@
     <img src="https://res.bestcake.com/m-images-2/pinzhi.png" class="special">
     <div class="special-title">没尝过这些美味的人生，是不完美的</div>
     <!--~~~~~~~~~~~~~~~~~~~~~~~~ 品质甄选商品列表 ~~~~~~~~~~~~-->
-    <div class="pinzhi-list" v-for="(item, index) in goodsList" :key="index">
-      <div class="pinzhi-img">
-        <img :src="item.ImgUrl">
-      </div>
-      <div class="pinzhi-detail">
-        <div class="pinzhi-name">{{item.Name}}</div>
-        <div class="pinzhi-info">{{item.MoreUrl}}</div>
-        <div class="pinzhi-tip">
-          <img src="https://res.bestcake.com/m-images-2/icon_zy.png">
+    <div class="pinzhi-box">
+      <div
+        class="pinzhi-list"
+        v-for="(item, index) in goodsList"
+        :key="index"
+        @click="toShow(item.Name,'list')"
+      >
+        <div class="pinzhi-img">
+          <img :src="item.ImgUrl">
         </div>
-        <div class="pinzhi-price">
-          <div>
-            <label style="font-weight: inherit;">
-              <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
-              <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">218</span>
-              <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">.00</span>
-            </label>
-            <span
-              style="color: rgb(153, 153, 153); font-size: 3.2vw; margin-left: 1.067vw; text-decoration: line-through; display: none;"
-            >￥218</span>
-            <span style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
+        <div class="pinzhi-detail">
+          <div class="pinzhi-name">{{item.Name}}</div>
+          <div class="pinzhi-info">{{item.MoreUrl}}</div>
+          <div class="pinzhi-tip">
+            <img src="https://res.bestcake.com/m-images-2/icon_zy.png">
+          </div>
+          <div class="pinzhi-price">
+            <div>
+              <label style="font-weight: inherit;">
+                <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">￥</span>
+                <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">{{item.CurrentPrice}}</span>
+                <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">.00</span>
+              </label>
+              <span
+                style="color: rgb(212, 212, 212); font-size: 3.2vw; margin-left: 1.067vw;"
+              >/ {{item.Size}}</span>
+            </div>
           </div>
         </div>
+        <div id="shopCart" class="pinzhi-cart">
+          <img src="https://res.bestcake.com/m-images-2/pinzhi-cart.png">
+        </div>
       </div>
-      <div id="shopCart" class="pinzhi-cart">
-        <img src="https://res.bestcake.com/m-images-2/pinzhi-cart.png">
+    </div>
+    <div class="jg-gonggao">
+      <div class="jg-gonggao1">
+        <div class="jg-text-z">划线价格</div>
+        <div class="jg-text-y">商品的专柜价、吊牌价、正品零售价、厂商指导价或该商品的曾经展示过的销售价等，并非原价，仅供参考。</div>
+      </div>
+      <div class="jg-gonggao1">
+        <div class="jg-text-z">未划线价格</div>
+        <div class="jg-text-y">商品的实时标价，不因表述的差异改变性质。具体成交价格根据商品参加活动，或会员使用优惠券、积分等发生变化，最终以订单结算页价格为准。</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Indicator } from "mint-ui";
 // mock--------------------------mock
 // import axios from "@/mock/mock";
 // axios.get("/GetIndexCakeList").then(res => {
@@ -148,6 +171,7 @@ export default {
     };
   },
   mounted() {
+    Indicator.open();
     // banner图的数据处理,并赋值给bannerList
     this.GetBannerList(res => {
       res.forEach(item => {
@@ -170,11 +194,21 @@ export default {
           this.goodsList.push(item);
         }
       });
+      console.log(this.goodsList);
       // 初始化的时候,选定第一组数据
       this.setTab(0);
+      Indicator.close();
     });
   },
   methods: {
+    toShow(key, c) {
+      //图片焦点图跳转详情页
+      console.log(key, c);
+      this.$router.push({
+        path: "/show",
+        query: { key, c }
+      });
+    },
     setTab(index) {
       // console.log(key);
       // this.tabActive=index;
@@ -284,12 +318,8 @@ export default {
   border-bottom: r(25) solid #fafafa;
   .guanggao_box {
     width: 49%;
-    a {
+    img {
       width: 100%;
-
-      img {
-        width: 100%;
-      }
     }
   }
 }
@@ -361,6 +391,58 @@ export default {
           font-size: 3.2vw;
           margin-left: 1.067vw;
         }
+      }
+    }
+  }
+}
+.pinzhi-box {
+  .pinzhi-list {
+    width: 100%;
+    height: 29.333vw;
+    margin-bottom: 3.2vw;
+    position: relative;
+    padding: 0 4vw;
+    .pinzhi-detail {
+      float: left;
+      margin-left: 4vw;
+      div {
+        max-width: 50vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        .pinzhi-info {
+          font-size: 3.2vw;
+          color: #999;
+          margin-bottom: 1.067vw;
+        }
+      }
+      .pinzhi-tip {
+        height: 4.8vw;
+        font-size: 0;
+        img {
+          height: 4.8vw;
+          margin-right: 0.4vw;
+        }
+      }
+    }
+    .pinzhi-img {
+      width: 29.333vw;
+      height: 29.333vw;
+      float: left;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .pinzhi-cart {
+      width: 11.2vw;
+      height: 11.2vw;
+      position: absolute;
+      right: 8vw;
+      bottom: 0;
+      img {
+        width: 100%;
+        height: 100%;
       }
     }
   }

@@ -31,6 +31,33 @@ class Apis {
       }
     })
   }
+  //  焦点图详情接口
+GetNSCakeByName(data) {
+  return request({
+    method: "get",
+    url: url01,
+    params: {
+      Name: data.Name,
+      c: "NsCakeCenter",
+      m: "GetNSCakeByName",
+      v: "1560225194548"
+    }
+  })
+}
+// 商品详情接口
+GetCakeByName(data) {
+return request({
+  method: "get",
+  url: url01,
+  params: {
+    City:"苏州" ,
+    ProName:data.ProName,
+    c: "Product",
+    m: "GetCakeByName",
+    v: "1560236137480"
+  }
+})
+}
 }
 
 export default new Apis()

@@ -4,46 +4,61 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  routes: [
-    {
-      path: '/',
-      name: '/',
-      meta: {
-        keepAlive: true
-      },
-      component: resolve => require(['@/components/home'], resolve),
-      redirect: '/index',
-      children: [
-        { path: 'index',
-          name: 'index',
-          meta: {
-            keepAlive: true
-          },
-          component: resolve => require(['@/components/main/index'], resolve) },
-        { path: 'classify',
-          name: 'classify',
-          component: resolve => require(['@/components/main/classify'], resolve),
-          children: [
-            { path: '/classify/china_news',
-              name: 'china_news',
-              component: resolve => require(['@/components/children/china_news'], resolve) },
-            { path: '/classify/other_news',
-              name: 'other_news',
-              component: resolve => require(['@/components/children/other_news'], resolve) }
-          ]
+  routes: [{
+    path: '/',
+    name: '/',
+    meta: {
+      keepAlive: true
+    },
+    component: resolve => require(['@/components/home'], resolve),
+    redirect: '/index',
+    children: [{
+        path: 'index',
+        name: 'index',
+        meta: {
+          keepAlive: true
         },
-        { path: 'cartList',
-          name: 'cartList',
-          component: resolve => require(['@/components/main/cartList'], resolve) },
-        { path: 'about_me',
-          name: 'about_me',
-          component: resolve => require(['@/components/main/mine'], resolve) },
-        { path: 'mine',
-          name: 'mine',
-          component: resolve => require(['@/components/main/mine'], resolve) }
-      ]
-    }
-  ]
+        component: resolve => require(['@/components/main/index'], resolve)
+      },
+      {
+        path: 'classify',
+        name: 'classify',
+        component: resolve => require(['@/components/main/classify'], resolve),
+        children: [{
+            path: '/classify/china_news',
+            name: 'china_news',
+            component: resolve => require(['@/components/children/china_news'], resolve)
+          },
+          {
+            path: '/classify/other_news',
+            name: 'other_news',
+            component: resolve => require(['@/components/children/other_news'], resolve)
+          }
+        ]
+      },
+      {
+        path: 'cartList',
+        name: 'cartList',
+        component: resolve => require(['@/components/main/cartList'], resolve)
+      },
+      {
+        path: 'about_me',
+        name: 'about_me',
+        component: resolve => require(['@/components/main/mine'], resolve)
+      },
+      {
+        path: 'mine',
+        name: 'mine',
+        component: resolve => require(['@/components/main/mine'], resolve)
+      }, ,
+      //详情页
+      {
+        path: 'show',
+        name: 'show',
+        component: resolve => require(['@/components/main/show'], resolve),
+      }
+    ]
+  }]
 })
 
 router.beforeEach((to, from, next) => {
@@ -51,9 +66,13 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/') {
     console.log('OK')
     if (location.search.indexOf('u') !== -1) {
-      next({path: '/test'})
+      next({
+        path: '/test'
+      })
     } else if (location.search.indexOf('s') !== -1) {
-      next({path: '/news'})
+      next({
+        path: '/news'
+      })
     } else {
       next()
     }
