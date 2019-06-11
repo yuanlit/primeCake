@@ -85,7 +85,7 @@
         @click="toShow(item.Name,'list')"
       >
         <div class="pinzhi-img">
-          <img :src="item.ImgUrl">
+          <img v-lazy="item.ImgUrl">
         </div>
         <div class="pinzhi-detail">
           <div class="pinzhi-name">{{item.Name}}</div>
@@ -181,20 +181,22 @@ export default {
     });
     // 获取主页的数据
     this.GetIndexCakeList(res => {
-      console.log(res);
+      // console.log(res);
       // 获取icon的数据
       var iconData = res.data.Tag.iconList.slice(0, 8);
       this.iconList = iconData;
       // console.log(this.iconList);
-      // 获取tab栏数据
+     
       res.data.Tag.list.forEach(item => {
         if (item.TabType == 4) {
+           // 获取tab栏数据
           this.tabList.push(item);
         } else {
+          // 获取品质甄选数据
           this.goodsList.push(item);
         }
       });
-      console.log(this.goodsList);
+      // console.log(this.goodsList);
       // 初始化的时候,选定第一组数据
       this.setTab(0);
       Indicator.close();
@@ -203,7 +205,7 @@ export default {
   methods: {
     toShow(key, c) {
       //图片焦点图跳转详情页
-      console.log(key, c);
+      // console.log(key, c);
       this.$router.push({
         path: "/show",
         query: { key, c }

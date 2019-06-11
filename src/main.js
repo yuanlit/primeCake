@@ -14,12 +14,19 @@ import coreConfig from '@/core/global/core.config'
 
 // 此处引入需要样式的SCSS文件
 import '@/common/css/index.scss'
+//引入图片懒加载
+import VueLazyload from 'vue-lazyload'
 
 import 'font-awesome/css/font-awesome.css'
 // import Mock from './mock/mock.js'
 // Mock.mockInit()
 // 给coreConfig传入Vue实例
 Vue.use(coreConfig)
+
+Vue.use(VueLazyload, {
+  loading: require('@/assets/laz.jpg')
+})
+
 
 Vue.config.productionTip = false
 
