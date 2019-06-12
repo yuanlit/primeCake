@@ -1,5 +1,8 @@
 <template>
   <div id="show">
+    <a href="/pack/active">
+      <div class="cake-fhsy">更多商品</div>
+    </a>
     <div class="swipe">
       <mt-swipe :auto="4000">
         <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
@@ -11,6 +14,7 @@
 </template>
 
 <script>
+import { Indicator } from "mint-ui";
 export default {
   name: "HelloWorld",
   data() {
@@ -28,19 +32,19 @@ export default {
         this.GetNSCakeByName(res => {
           console.log(res);
         });
-         this.setBannerList("ns-detail");
-      }else{
+        this.setBannerList("ns-detail");
+      } else {
         this.GetCakeByName(res => {
           console.log(res);
         });
-         this.setBannerList("jd-detail");
+        this.setBannerList("jd-detail");
       }
     },
     setBannerList(path) {
       //  星光游乐园/星光游乐园-1.jpg
       for (var i = 0; i < 4; i++) {
         // https://res.bestcake.com/m-images/ns-detail/星光游乐园/星光游乐园-1.jpg
-       // https://res.bestcake.com/m-images/jd-detail/奥利奥雪域牛乳芝士/%E5%A5%A5%E5%88%A9%E5%A5%A5%E9%9B%AA%E5%9F%9F%E7%89%9B%E4%B9%B3%E8%8A%9D%E5%A3%AB-1.jpg?v=20170607
+        // https://res.bestcake.com/m-images/jd-detail/奥利奥雪域牛乳芝士/%E5%A5%A5%E5%88%A9%E5%A5%A5%E9%9B%AA%E5%9F%9F%E7%89%9B%E4%B9%B3%E8%8A%9D%E5%A3%AB-1.jpg?v=20170607
         var str = `https://res.bestcake.com/m-images/${path}/${
           this.$route.query.key
         }/${this.$route.query.key}-${i + 1}.jpg`;
@@ -58,11 +62,11 @@ export default {
         callback(res);
       });
     },
-    GetCakeByName(callback){
-       var data = {
+    GetCakeByName(callback) {
+      var data = {
         ProName: this.$route.query.key
       };
-       // 商品详情接口
+      // 商品详情接口
       this.$apis.GetCakeByName(data).then(res => {
         callback(res);
       });
@@ -73,9 +77,25 @@ export default {
 
 <style scoped lang="scss">
 #show {
+  a {
+    .cake-fhsy {
+      width: r(200);
+      height: r(80);
+      position: absolute;
+      z-index: 2;
+      right: r(20);
+      top :r(60);
+      border: 1px solid #000;
+      border-radius: 5%;
+      font-size: r(40);
+      line-height: r(80);
+      text-align: center;
+      color: #000;
+    }
+  }
   .swipe {
     width: 100%;
-    height: r(190 * 2);
+    height: r(427 * 2);
     .imgs {
       width: 100%;
       height: 100%;

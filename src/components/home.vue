@@ -1,8 +1,8 @@
 <template>
   <div>
-    <layHead></layHead>
+    <layHead v-if="!(this.$route.path == '/show')"></layHead>
     <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"/>
+      <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title"/>>
     </keep-alive>
       <router-view v-if="!$route.meta.keepAlive"/>
   </div>
@@ -11,8 +11,16 @@
 <script>
 import layHead from '@/components/layout/layHead'
 export default {
+  data(){
+    return {
+
+    }
+  },
   components: {
     layHead
+  },
+  mounted(){
+
   }
 }
 

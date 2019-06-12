@@ -16,34 +16,36 @@ const router = new VueRouter({
         path: 'index',
         name: 'index',
         meta: {
-          keepAlive: true
+          keepAlive: true,
+          title:"贝思客主页"
         },
         component: resolve => require(['@/components/main/index'], resolve)
       },
       {
         path: 'classify',
         name: 'classify',
-        component: resolve => require(['@/components/main/classify'], resolve),
-        children: [{
-            path: '/classify/china_news',
-            name: 'china_news',
-            component: resolve => require(['@/components/children/china_news'], resolve)
-          },
-          {
-            path: '/classify/other_news',
-            name: 'other_news',
-            component: resolve => require(['@/components/children/other_news'], resolve)
-          }
-        ]
+        meta: {
+          keepAlive: true,
+          title:"贝思客商品分类页"
+        },
+        component: resolve => require(['@/components/main/classify'], resolve)
       },
       {
         path: 'cartList',
         name: 'cartList',
+        meta: {
+          keepAlive: true,
+          title:"购物车"
+        },
         component: resolve => require(['@/components/main/cartList'], resolve)
       },
       {
         path: 'about_me',
         name: 'about_me',
+        meta: {
+          keepAlive: true,
+          title:"我的"
+        },
         component: resolve => require(['@/components/main/mine'], resolve)
       },
       {

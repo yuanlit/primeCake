@@ -17,6 +17,9 @@ import '@/common/css/index.scss'
 //引入图片懒加载
 import VueLazyload from 'vue-lazyload'
 
+// 引入动态title
+Vue.use(require('vue-wechat-title'));
+
 import 'font-awesome/css/font-awesome.css'
 // import Mock from './mock/mock.js'
 // Mock.mockInit()
