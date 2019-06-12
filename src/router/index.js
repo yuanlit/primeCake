@@ -17,7 +17,7 @@ const router = new VueRouter({
         name: 'index',
         meta: {
           keepAlive: true,
-          title:"贝思客主页"
+          title:"贝思客蛋糕"
         },
         component: resolve => require(['@/components/main/index'], resolve)
       },
@@ -26,7 +26,7 @@ const router = new VueRouter({
         name: 'classify',
         meta: {
           keepAlive: true,
-          title:"贝思客商品分类页"
+          title:"列表"
         },
         component: resolve => require(['@/components/main/classify'], resolve)
       },

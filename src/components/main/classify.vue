@@ -21,7 +21,7 @@
     <div class="goods_box">
       <ul>
         <li v-for="(item, index) in activeList" :key="index">
-          <img v-lazy="item.imgUrl">
+          <img :src="item.imgUrl">
           <div class="list-product-b">
             <span>{{item.Name}}</span>
           </div>
@@ -33,12 +33,12 @@
             <span style="color: rgb(255, 51, 0); font-size: 4.267vw;">{{item.CurrentPrice}}</span>
             <span style="color: rgb(255, 51, 0); font-size: 3.2vw;">.00</span>
             <span style="color: rgb(188, 188, 188); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
-          </div>
-          <div class="list-product-e">
-            <img
-              src="https://res.bestcake.com\m-images-2\list-cart.png?v=1"
-              class="am-img-responsive"
-            >
+            <div class="list-product-e">
+              <img
+                src="https://res.bestcake.com\m-images-2\list-cart.png?v=1"
+                class="am-img-responsive"
+              >
+            </div>
           </div>
         </li>
       </ul>
@@ -57,9 +57,7 @@
 </template>
 
 <script>
- import {
-    Indicator
-  } from "mint-ui";
+import { Indicator } from "mint-ui";
 export default {
   name: "HelloWorld",
   data() {
@@ -204,13 +202,12 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
     li {
-      position: relative;
-      width: r(340);
-      height: r(460);
-      margin-bottom: r(50);
+      width: 47%;
+      height: 63vw;
+      margin-bottom: 5vw;
       img {
-        width: r(340);
-        height: r(340);
+        width: 45vw;
+        height: 45vw;
       }
       .list-product-b {
         margin-top: 1.867vw;
@@ -222,6 +219,7 @@ export default {
         }
       }
       .list-product-c {
+        
         width: 32vw;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -233,20 +231,22 @@ export default {
           color: #999;
           padding-left: 2vw;
         }
+        
       }
       .list-product-d {
-      }
-      .list-product-e {
-        width: 5.334vw;
-        height: 5.334vw;
-        position: absolute;
-        right: 1vw;
-        bottom: 0vw;
-        img {
-          display: block;
-          max-width: 100%;
-          height: auto;
-        }
+          position: relative;
+          .list-product-e {
+            width: 5.334vw;
+            height: 5.334vw;
+            position: absolute;
+            right: 1vw;
+            bottom: 0vw;
+            img {
+              display: block;
+              max-width: 100%;
+              height: auto;
+            }
+          }
       }
     }
   }

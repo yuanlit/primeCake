@@ -216,6 +216,17 @@
       });
     },
     methods: {
+      toShow(item) {
+      //图片焦点图跳转详情页
+      var data={
+        key:item.Name||item.key,
+        c:item.SupplyNo||"NS"
+      }
+      this.$router.push({
+        path: "/show",
+        query:{key:data.key,c:data.c}
+      });
+    },
       toShow(key, c) {
         //图片焦点图跳转详情页
         // console.log(key, c);
@@ -309,7 +320,6 @@
 
     .icon-box {
       width: 25%;
-
       a {
         div {
           text-align: center;
