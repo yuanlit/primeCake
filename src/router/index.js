@@ -8,7 +8,7 @@ const router = new VueRouter({
     path: '/',
     name: '/',
     meta: {
-      keepAlive: true
+      keepAlive: false
     },
     component: resolve => require(['@/components/home'], resolve),
     redirect: '/index',
@@ -16,7 +16,7 @@ const router = new VueRouter({
       path: 'index',
       name: 'index',
       meta: {
-        keepAlive: true,
+        keepAlive: false,
         title: '贝思客蛋糕'
       },
       component: resolve => require(['@/components/main/index'], resolve)
@@ -25,7 +25,7 @@ const router = new VueRouter({
       path: 'classify',
       name: 'classify',
       meta: {
-        keepAlive: true,
+        keepAlive: false,
         title: '列表'
       },
       component: resolve => require(['@/components/main/classify'], resolve)
@@ -34,7 +34,7 @@ const router = new VueRouter({
       path: 'cartList',
       name: 'cartList',
       meta: {
-        keepAlive: true,
+        keepAlive: false,
         title: '购物车'
       },
       component: resolve => require(['@/components/main/cartList'], resolve)
@@ -43,7 +43,7 @@ const router = new VueRouter({
       path: 'main',
       name: 'main',
       meta: {
-        keepAlive: true,
+        keepAlive: false,
         title: "我的"
       },
       component: resolve => require(['@/components/main/mine'], resolve)
@@ -58,7 +58,7 @@ const router = new VueRouter({
       path: 'show',
       name: 'show',
       meta: {
-        keepAlive: true,
+        keepAlive: false,
         title: '商品详情'
       },
       component: resolve => require(['@/components/main/show'], resolve)

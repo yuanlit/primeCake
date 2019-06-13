@@ -54,12 +54,13 @@ class Apis {
     })
   }
   // 魔发猜心以及部分品质甄选接口
+  // KSK 
   GetCakeByName (data) {
     return request({
       method: "get",
       url: url01,
       params: {
-        City: "嘉兴",
+        City: "苏州",
         ProName: data.ProName,
         c: "Product",
         m: "GetCakeByName",
@@ -67,7 +68,21 @@ class Apis {
       }
     })
   }
-  // 严选商品的接口
+  // JZ  严选接口
+  GetjzCakeInfo (data) {
+    return request({
+      method: 'get',
+      url: url01,
+      params: {
+        City: '苏州',
+        ProName: data.Name,
+        c: 'IndexCenter',
+        m: 'GetjzCakeInfo',
+        v: v_data
+      }
+    })
+  }
+  //
   GetRuPCakeByName (data) {
     console.log(data.Name)
     return request({

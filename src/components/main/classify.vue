@@ -20,7 +20,7 @@
     </div>
     <div class="goods_box">
       <ul>
-        <li v-for="(item, index) in activeList" :key="index">
+        <li v-for="(item, index) in activeList" :key="index" @click="toShow(item)">
           <img :src="item.imgUrl">
           <div class="list-product-b">
             <span>{{item.Name}}</span>
@@ -84,6 +84,19 @@ export default {
     this.pageInit();
   },
   methods: {
+       toShow(item) {
+      //图片焦点图跳转详情页
+     
+      var data = {
+        key: item.key || item.Name,
+        c: item.SupplyNo || "NS"
+      };
+       console.log(data)
+      this.$router.push({
+        path: "/show",
+        query: data
+      });
+    },
     test(index) {
       this.active = index;
       if (index == 1) {

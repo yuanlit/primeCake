@@ -14,7 +14,7 @@ import coreConfig from '@/core/global/core.config'
 
 // 此处引入需要样式的SCSS文件
 import '@/common/css/index.scss'
-//引入图片懒加载
+// 引入图片懒加载
 import VueLazyload from 'vue-lazyload'
 
 // 引入动态title
@@ -29,7 +29,6 @@ Vue.use(coreConfig)
 Vue.use(VueLazyload, {
   loading: require('@/assets/laz.jpg')
 })
-
 
 Vue.config.productionTip = false
 

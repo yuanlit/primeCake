@@ -240,7 +240,6 @@ export default {
   methods: {
     toShow(item) {
       //图片焦点图跳转详情页
-     
       var data = {
         key: item.key || item.Name,
         c: item.SupplyNo || "NS"
@@ -537,5 +536,20 @@ export default {
       color: #a2a2a2;
     }
   }
+}
+.doc-icon-custom-2 .right {
+    float: left;
+    line-height: 6.5vw;
+    font-size: 3.73vw;
+}
+.am-img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.doc-icon-custom-2 .left {
+    float: left;
+    width: 12%;
+    margin-right: 2.66vw;
 }
 </style>

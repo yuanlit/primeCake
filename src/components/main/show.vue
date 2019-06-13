@@ -15,32 +15,108 @@
       <div class="name_info">{{goodsInfo.Name}}</div>
     </div>
     <!-- 信息页面 -->
-    <!-- <div class="am-u-sm-12 clplr bgw mt4">
-                <div class="cake-info-datum">
-                    <div class="am-u-sm-12 clplr cake-info-datum-list cake-info-datum-a">
-                        <div class="cake-info-left qfc">甜度</div>
-                        <div class="cake-info-right hfc">
-                            <img alt="" ng-src="https://res.bestcake.com/m-images/ww/jz/tiandu_3.png" style="vertical-align: top; width: 22.4vw; margin-top: 0.6vw;" src="https://res.bestcake.com/m-images/ww/jz/tiandu_3.png">
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 clplr cake-info-datum-list cake-info-datum-b">
-                        <div class="cake-info-left qfc">口味</div>
-                        <div class="cake-info-right hfc ng-binding">醇香奶油</div>
-                    </div>
-                    <div class="am-u-sm-12 clplr cake-info-datum-list cake-info-datum-c">
-                        <div class="cake-info-left qfc">原材料</div>
-                        <div class="cake-info-right hfc ng-binding">安佳淡奶油、进口白巧克力、新鲜草莓、进口蓝莓，</div>
-                    </div>
-                    <div class="am-u-sm-12 clplr cake-info-datum-list cake-info-datum-d">
-                        <div class="cake-info-left qfc">适合人群</div>
-                        <div class="cake-info-right hfc ng-binding">所有人群</div>
-                    </div>
-                    <div class="am-u-sm-12 clplr cake-info-datum-list cake-info-datum-e">
-                        <div class="cake-info-left qfc">保鲜条件</div>
-                        <div class="cake-info-right hfc">最适宜0℃~8℃冷藏保存，离开冷藏请勿超过2小时。5月1日~10月31日建议2天内食用 11月1日~翌年4月30日建议3天内食用。</div>
-                    </div>
-                </div>
-            </div> -->
+    <div class="jg-box">
+      <div class="jg-gonggao">
+        <div class="jg-gonggao1">
+          <div class="jg-text-z">甜度</div>
+          <div class="jg-text-y">
+            <img
+              alt
+              ng-src="https://res.bestcake.com/m-images/ww/jz/tiandu_3.png"
+              style="vertical-align: top; width: 22.4vw; margin-top: 0.6vw;"
+              src="https://res.bestcake.com/m-images/ww/jz/tiandu_3.png"
+            >
+          </div>
+        </div>
+        <div class="jg-gonggao1">
+          <div class="jg-text-z">口味</div>
+          <div class="jg-text-y">{{goodsInfo.CategoryName}}</div>
+        </div>
+        <div class="jg-gonggao1">
+          <div class="jg-text-z">原材料</div>
+          <div class="jg-text-y">{{goodsInfo.Resource}}</div>
+        </div>
+        <div class="jg-gonggao1">
+          <div class="jg-text-z">适合人群</div>
+          <div class="jg-text-y" v-if="isLoad" v-text="goodsInfo.details_tips">-</div>
+        </div>
+        <div class="jg-gonggao1">
+          <div class="jg-text-z">保鲜条件</div>
+          <div class="jg-text-y">最适宜0℃~8℃冷藏保存，离开冷藏请勿超过2小时。5月1日~10月31日建议2天内食用 11月1日~翌年4月30日建议3天内食用。</div>
+        </div>
+      </div>
+    </div>
+    <!-- 客户评论 -->
+    <div class="comment">
+      <span class="left">
+        <img src="https://res.bestcake.com/m-images/ww/detail/evaluate-a.png" class="comment_ico">
+        <span>商品评论</span>
+      </span>
+      <span class="right">
+        <span>(4条)</span>
+        <span>
+          <img
+            src="https://res.bestcake.com/m-images/ww/detail/evaluate-b.png"
+            class="am-img-responsive"
+          >
+        </span>
+      </span>
+    </div>
+    <div class="bang">
+      <span>{{goodsInfo.Size}}</span>
+    </div>
+    <div class="cake_info" v-if="isLoad" >
+      <div class="cake_info_t">
+        <span>
+          <img src="https://res.bestcake.com/m-images/ww/detail/icon-custom-1.png?v=112">
+          <i>{{goodsInfo.configsize}}</i>
+        </span>
+        <span>
+          <img src="https://res.bestcake.com/m-images/ww/detail/icon-custom-2.png?v=112">
+          <i>{{goodsInfo.configpeople}}</i>
+        </span>
+      </div>
+      <div class="cake_info_b">
+        <span>
+          <img src="https://res.bestcake.com/m-images/ww/detail/icon-custom-3.png?v=112">
+          <i>{{goodsInfo.configware}}</i>
+        </span>
+        <span>
+          <img src="https://res.bestcake.com/m-images/ww/detail/icon-custom-4.png?v=112">
+          <i>{{goodsInfo.configtips}}</i>
+        </span>
+      </div>
+    </div>
+    <div class="jj_box">
+      <div class="jj_l">购买数量</div>
+      <div class="jj_r">
+        <span class="add">+</span>
+        <span class="num">1</span>
+        <span class="sub">-</span>
+      </div>
+    </div>
+    <!-- // 最后 -->
+    <div class="jg-gonggao">
+      <div class="jg-gonggao1">
+        <div class="jg-text-z">划线价格</div>
+        <div class="jg-text-y">商品的专柜价、吊牌价、正品零售价、厂商指导价或该商品的曾经展示过的销售价等，并非原价，仅供参考。</div>
+      </div>
+      <div class="jg-gonggao1">
+        <div class="jg-text-z">未划线价格</div>
+        <div class="jg-text-y">商品的实时标价，不因表述的差异改变性质。具体成交价格根据商品参加活动，或会员使用优惠券、积分等发生变化，最终以订单结算页价格为准。</div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="left">
+        <span>
+          已优惠:
+          <i>0.00</i>
+        </span>
+        <span class="price">{{goodsInfo.CurrentPrice}}</span>
+      </div>
+      <div class="center">加入购物车</div>
+      <div class="right">立即购买</div>
+    </div>
   </div>
 </template>
 
@@ -51,7 +127,8 @@ export default {
   data() {
     return {
       bannerList: [],
-      goodsInfo: []
+      goodsInfo: [],
+      isLoad: false
     };
   },
   mounted() {
@@ -60,32 +137,68 @@ export default {
   methods: {
     pageInit() {
       // 初始化执行
-      if (this.$route.query.c == "NS") {
+      if (this.$route.query.c.indexOf("NS") != -1 ) {
         this.GetNSCakeByName(res => {
-          // var goodsInfo = [];
-          console.log(res)
-          // res.data.Tag.forEach(ele => {
-          //   if (ele.City == "苏州") {
-          //     goodsInfo.push(ele);
-          //   }
-          // });
-          // this.goodsInfo = goodsInfo[0];
-          // console.log(this.goodsInfo);
+          var goodsInfo = [];
+          res.data.Tag.forEach(ele => {
+            if (ele.City == "苏州") {
+              goodsInfo.push(ele);
+            }
+          });
+          // 将JSON数据处理成数组
+          goodsInfo[0].Details = JSON.parse(goodsInfo[0].Details);
+          goodsInfo[0].ProductConfig = JSON.parse(goodsInfo[0].ProductConfig);
+          // ----------------------------------------------------------------------
+
+          // 合适吃的人群的数据
+          goodsInfo[0].details_tips=goodsInfo[0].Details.details_tips;
+          // 大小(磅)的数据
+          goodsInfo[0].configsize=goodsInfo[0].ProductConfig.pc.configsize;
+          // 适合多少人分享的数据
+          goodsInfo[0].configpeople=goodsInfo[0].ProductConfig.pc.configpeople;
+          // 餐具的数据
+          goodsInfo[0].configware=goodsInfo[0].ProductConfig.pc.configware;
+          // 预定时间的数据
+          goodsInfo[0].configtips=goodsInfo[0].ProductConfig.pc.configtips;
+          this.goodsInfo = goodsInfo[0];
+          this.isLoad = true;
         });
         this.setBannerList("ns-detail");
       } else if (this.$route.query.c.indexOf("KSK") != -1) {
-        this.GetCakeByName(res => {
-          console.log(res);
-        });
         this.setBannerList("jd-detail");
+        this.GetCakeByName(res => {
+          let data = res.data.Tag.infos;
+          this.goodsInfo = data;
+
+          this.goodsInfo.Resource = data.Resourse;
+          this.goodsInfo.details_tips = '所有人群';
+          this.goodsInfo.Size = data.CakeType[0].Size;
+          this.goodsInfo.configsize = '直径13.66cm';
+          this.goodsInfo.configpeople = '适合4到5人食用'
+          this.goodsInfo.configware =data.CakeType[0].PackingList;
+          this.goodsInfo.configtips = data.Attention;
+          this.goodsInfo.CurrentPrice = data.CakeType[0].CurrentPrice
+          console.log(this.goodsInfo)
+          this.isLoad = true;
+        });
       } else if (this.$route.query.c.indexOf("RP") != -1) {
         this.GetRuPCakeByName(res => {
-          console.log(res);
+          let data = res.data.Tag[0]
+          this.goodsInfo = data;
+          this.goodsInfo.details_tips = '-';
           this.setBannerList("rp-detail");
         });
+      }else if (this.$route.query.c.indexOf("JZ") != -1) {
+          this.GetjzCakeInfo((res) => {
+            let data = res.data.Tag[0];
+            this.goodsInfo = data;
+            this.goodsInfo.CategoryName = data.KW;
+            this.goodsInfo.Resource = data.Resourse;
+            this.setBannerList("jz-detail");
+          })
       }
     },
-    
+
     setBannerList(path) {
       //  星光游乐园/星光游乐园-1.jpg
       for (var i = 0; i < 4; i++) {
@@ -94,6 +207,7 @@ export default {
         }/${this.$route.query.key}-${i + 1}.jpg`;
         this.bannerList.push(str);
       }
+      // console.log(this.bannerList)
     },
 
     GetNSCakeByName(callback) {
@@ -118,11 +232,20 @@ export default {
       var data = {
         Name: this.$route.query.key
       };
-      // 严选商品接口
+
       this.$apis.GetRuPCakeByName(data).then(res => {
         callback(res);
       });
-    }
+    },
+    GetjzCakeInfo(callback) {
+      var data = {
+        Name: this.$route.query.key
+      };
+      this.$apis.GetjzCakeInfo(data).then(res => {
+        callback(res);
+      });
+    },
+
   }
 };
 </script>
@@ -183,8 +306,219 @@ export default {
   }
 }
 // 加下边框
-.name_box {
+.name_box,
+.comment,
+.jg-box {
   border-bottom: r(25) solid #f5f5f2;
+}
+.jg-box {
+  height: auto;
+  padding-bottom: 15vw;
+  .jg-gonggao {
+    padding: 2vw 0;
+    padding-top: 8vw;
+    padding-right: 0px;
+    padding-left: 0px;
+    height: auto;
+    background: #fff;
+    .jg-gonggao1 {
+      margin: 0 4vw;
+      font-size: 3.734vw;
+      margin-bottom: 8vw;
+      clear: both;
+      .jg-text-z {
+        float: left;
+        width: 27vw;
+        color: #a2a2a2;
+        margin-bottom: 8vw;
+      }
+      .jg-text-y {
+        float: left;
+        width: 65vw;
+        color: #181818;
+        margin-bottom: 8vw;
+      }
+    }
+  }
+}
+.comment {
+  height: 5vw;
+  display: flex;
+  padding: 5vw;
+  justify-content: space-between;
+  align-items: center;
+
+  .left {
+    height: 5vw;
+    text-align: center;
+    font-size: r(32);
+    img {
+      width: 5vw;
+      height: 5vw;
+      transform: translateY(2vw);
+      margin: 0 2vw;
+    }
+  }
+  .right {
+    height: 5vw;
+    text-align: center;
+    font-size: r(32);
+    img {
+      width: 3vw;
+      height: 3vw;
+      // transform: translateY(vw);
+      margin: 0 2vw;
+    }
+  }
+}
+
+.jg-gonggao {
+  background: #f5f5f2;
+  padding: 2vw 0;
+  padding-top: 8vw;
+  padding-right: 0px;
+  padding-bottom: 40vw;
+  padding-left: 0px;
+  height: auto;
+  .jg-gonggao1 {
+    margin: 0 4vw;
+    font-size: 3.734vw;
+    margin-bottom: 21vw;
+    .jg-text-z {
+      float: left;
+      width: 27vw;
+      color: #181818;
+    }
+    .jg-text-y {
+      float: left;
+      width: 65vw;
+      color: #a2a2a2;
+    }
+  }
+}
+.bang {
+  padding: 5vw;
+  span {
+    display: inline-block;
+    background: #02d3d6;
+    border-radius: 2px;
+    color: #fff;
+    border: 1px solid #02d3d6;
+    width: 18vw;
+    height: 8vw;
+    font-size: 3vw;
+    text-align: center;
+    line-height: 8vw;
+  }
+}
+.cake_info {
+  border-bottom: r(25) solid #f5f5f2;
+  width: 100%;
+  height: 30vw;
+  box-sizing: border-box;
+  padding: 2vw 0;
+  div {
+    height: 8vw;
+    line-height: 8vw;
+    padding: 2vw 0;
+    display: flex;
+    justify-content: space-between;
+    span {
+      flex: 1;
+      padding: 0 5vw;
+      font-size: 3vw;
+      img {
+        width: 7vw;
+        padding: 0 1vw;
+      }
+      i {
+        display: inline-block;
+        transform: translateY(0);
+        font-style: normal;
+        -o-text-overflow:ellipsis;
+        width: 30vw;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        white-space:nowrap;
+      }
+    }
+  }
+}
+.jj_box {
+  width: 100%;
+  height: 14vw;
+  box-sizing: border-box;
+  padding: 3vw 0;
+  div {
+    font-size: 3vw;
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    line-height: 7vw;
+    padding: 0 4vw;
+    float: left;
+    span {
+      float: right;
+      padding-right: 3vw;
+      font-size: 5vw;
+      width: 4vw;
+    }
+    .num {
+      transform: translateY(0.6vw);
+    }
+    .add,
+    .sub {
+      font-size: 8vw;
+    }
+  }
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 15vw;
+  box-sizing: border-box;
+  background: white;
+  display: flex;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .left {
+    width: 40vw;
+    flex-direction: column-reverse;
+    span {
+      display: block;
+      width: 36vw;
+      i {
+        font-style: normal;
+        padding: 0 2vw;
+        font-size: 2.4vw;
+        color: #333;
+      }
+    }
+    .price {
+      font-size: 4.53vw;
+      color: #f2495e;
+      font-weight: bolder;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  .center,
+  .right {
+    width: 30vw;
+    font-size: 4vw;
+  }
+  .right {
+    background: #02d3d6;
+    color :white;
+    font-weight:  bold;
+  }
 }
 </style>
 
