@@ -244,7 +244,7 @@ export default {
         key: item.key || item.Name,
         c: item.SupplyNo || "NS"
       };
-       console.log(data)
+      //  console.log(data)
       this.$router.push({
         path: "/show",
         query: data

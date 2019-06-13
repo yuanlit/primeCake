@@ -40,17 +40,12 @@ const router = new VueRouter({
       component: resolve => require(['@/components/main/cartList'], resolve)
     },
     {
-      path: 'main',
-      name: 'main',
-      meta: {
-        keepAlive: false,
-        title: "我的"
-      },
-      component: resolve => require(['@/components/main/mine'], resolve)
-    },
-    {
       path: 'mine',
       name: 'mine',
+      meta: {
+        keepAlive: false,
+        title: '我的'
+      },
       component: resolve => require(['@/components/main/mine'], resolve)
     },
       // 详情页

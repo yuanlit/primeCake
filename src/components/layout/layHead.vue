@@ -52,23 +52,14 @@ export default {
     };
   },
   mounted(){
-    console.log(location.hash)
-    if(location.hash == "#/index"){
-      this.active = 0;
-    }else if (location.hash == "#/classify"){
-      this.active = 1;
-    }else if (location.hash == "#/cartList"){
-      this.active = 2;
-    }else if (location.hash == "#/mine"){
-      this.active = 3;
-    }
+    this.active=100;
   },
   methods: {
     change (index) {
       this.active = index;
-    }
   }
-};
+  }
+}
 </script>
 
 <style scoped lang= 'scss'>

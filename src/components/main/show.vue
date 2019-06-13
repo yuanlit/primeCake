@@ -90,9 +90,9 @@
     <div class="jj_box">
       <div class="jj_l">购买数量</div>
       <div class="jj_r">
-        <span class="add">+</span>
-        <span class="num">1</span>
-        <span class="sub">-</span>
+        <span class="add" @click="add">+</span>
+        <span class="num">{{num}}</span>
+        <span class="sub" @click="sub">-</span>
       </div>
     </div>
     <!-- // 最后 -->
@@ -128,13 +128,22 @@ export default {
     return {
       bannerList: [],
       goodsInfo: [],
-      isLoad: false
+      isLoad: false,
+      num:0
     };
   },
   mounted() {
     this.pageInit();
+    this.num = this.$store.state.num;
   },
   methods: {
+    add (){
+      // this.$eventHub.$emit('mutations')
+      // this.$store.dispatch("add")
+    },
+    sub(){
+
+    },
     pageInit() {
       // 初始化执行
       if (this.$route.query.c.indexOf("NS") != -1 ) {
@@ -178,7 +187,7 @@ export default {
           this.goodsInfo.configware =data.CakeType[0].PackingList;
           this.goodsInfo.configtips = data.Attention;
           this.goodsInfo.CurrentPrice = data.CakeType[0].CurrentPrice
-          console.log(this.goodsInfo)
+          // console.log(this.goodsInfo)
           this.isLoad = true;
         });
       } else if (this.$route.query.c.indexOf("RP") != -1) {

@@ -14,7 +14,7 @@ export default {
   },
   mounted () {
     // console.log(this.$route)
-    console.log(this.$store.test)
+    // console.log(this.$store.test)
   }
 }
 
