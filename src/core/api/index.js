@@ -1,8 +1,8 @@
 import request from './http'
 
 // 引入全局参数
-import params from './params';
-var v_data = params.v; //拿到当前时间戳
+import params from './params'
+var v_data = params.v // 拿到当前时间戳
 // ------------------------------------mock
 // var pox = '/apis'
 // import axios from 'axios'
@@ -15,14 +15,14 @@ var v_data = params.v; //拿到当前时间戳
 var url01 = '/json1811.ashx'
 class Apis {
   // 轮播的接口
-  GetBannerList() {
+  GetBannerList () {
     return request({
       method: 'get',
       url: url01,
       params: {
         v: v_data,
-        c: "Index",
-        m: "GetBannerList",
+        c: 'Index',
+        m: 'GetBannerList',
         Type: 2,
         City: "苏州"
       }
@@ -41,7 +41,7 @@ class Apis {
     })
   }
   //  焦点图详情接口
-  GetNSCakeByName(data) {
+  GetNSCakeByName (data) {
     return request({
       method: "get",
       url: url01,
@@ -53,8 +53,8 @@ class Apis {
       }
     })
   }
-  // 商品详情接口
-  GetCakeByName(data) {
+  // 魔发猜心以及部分品质甄选接口
+  GetCakeByName (data) {
     return request({
       method: "get",
       url: url01,
@@ -67,8 +67,22 @@ class Apis {
       }
     })
   }
+  // 严选商品的接口
+  GetRuPCakeByName (data) {
+    console.log(data.Name)
+    return request({
+      method: 'get',
+      url: url01,
+      params: {
+        Name: data.Name,
+        c: 'NsCakeCenter',
+        m: 'GetRuPCakeByName',
+        v: v_data
+      }
+    })
+  }
   // 获取城市的接口
-  GetPhotoLIst() {
+  GetPhotoLIst () {
     return request({
       method: "get",
       url: url01,
@@ -82,7 +96,7 @@ class Apis {
     })
   }
   // 分类页数据接口
-  GetJdListNew() {
+  GetJdListNew () {
     return request({
       method: 'get',
       url: url01,

@@ -3,7 +3,8 @@
     <ul>
       <li v-for="(item,index) in nav" :key="index">
         <router-link :to="item.path">
-          <img :src="item.url">
+          <img :class="{active:active == index}" :src="item.url[0]" @click="change(index)">
+          <img :class="{active:active != index}" :src="item.url[1]" @click="change(index)">
         </router-link>
       </li>
     </ul>
@@ -16,37 +17,44 @@ export default {
   name: "HelloWorld",
   data() {
     return {
+      active:0,
       nav: [
         {
-          url:
-            "https://res.bestcake.com/m-images/ww/foot/foot-menu-a-" +
-            num +
-            ".png",
+          url: [
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-a-1.png",
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-a-2.png"
+          ],
+
           path: "/index"
         },
         {
-          url:
-            "https://res.bestcake.com/m-images/ww/foot/foot-menu-b-" +
-            num +
-            ".png",
+           url: [
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-b-1.png",
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-b-2.png"
+          ],
           path: "/classify"
         },
         {
-          url:
-            "https://res.bestcake.com/m-images/ww/foot/foot-menu-c-" +
-            num +
-            ".png",
+           url: [
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-c-1.png",
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-c-2.png"
+          ],
           path: "/cartList"
         },
         {
-          url:
-            "https://res.bestcake.com/m-images/ww/foot/foot-menu-d-" +
-            num +
-            ".png",
+           url: [
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-d-1.png",
+            "https://res.bestcake.com/m-images/ww/foot/foot-menu-d-2.png"
+          ],
           path: "/mine"
         }
       ]
     };
+  },
+  methods: {
+    change (index) {
+      this.active = index;
+    }
   }
 };
 </script>
@@ -86,5 +94,8 @@ a {
 img {
   width: 40%;
   color: red;
+}
+.active {
+  display: none;
 }
 </style>
