@@ -6,14 +6,23 @@ Vue.use(Vuex)
 
 // 定义属性值  data
 const state = {
-  name: '苹果',
-  num: 0,
-  price: 16
+  num: 1,
+  cartList: [],
+  city: '苏州',
+  cityList1: ['上海', '北京', '天津', '重庆'],
+  cityList2: ['苏州', '无锡', '南京', '杭州', '宁波', '绍兴', '成都', '常州', '台州', '嘉兴']
 }
 // 定义同步方法
 const mutations = {
-  add (state) {
+  City_qaunju (state) {
+    state.city = item
+  },
+  add (state, data) {
     state.num++
+  },
+  sub (state, data) {
+    state.num--
+    state.num = state.num <= 1 ? 1 : state.num
   }
 }
 // 定义 computed(属性计算)

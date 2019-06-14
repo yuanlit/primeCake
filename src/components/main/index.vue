@@ -1,38 +1,29 @@
 <template>
   <div id="app01">
-    <div class="city-box">
-      <!-- <div class='city-list'>
-        <div>
-          <div class="city-label1"><label>选择城市</label>
-          </div>
-          <div class="city-one1">
-            <ul class="am-u-sm-12 clplr">
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">上海</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">北京</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">天津</a></li>
-              <li class="am-u-sm-4 clplr am-u-end"><a href="javascript:void(0);">重庆</a></li>
-            </ul>
-          </div>
-          <div class="clear"></div>
-          <div class="city-one2">
-            <ul class="am-u-sm-12 clplr">
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">苏州</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">无锡</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">南京</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">杭州</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">宁波</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">绍兴</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">成都</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">常州</a></li>
-              <li class="am-u-sm-4 clplr"><a href="javascript:void(0);">台州</a></li>
-              <li class="am-u-sm-4 clplr  am-u-end"><a href="javascript:void(0);">嘉兴</a></li>
-            </ul>
-          </div>
+    <div :class="{'city-box':true,'rm':bool}">
+      <div class="city-list">
+        <div class="city-label1">
+          <label>选择城市</label>
         </div>
-      </div>-->
+        <div class="city-one1">
+          <ul class="am-u-sm-12 clplr">
+            <li class="am-u-sm-4 clplr" v-for="(item,index) in this.$store.state.cityList1" :key="index">
+              <a href="javascript:void(0);" @click="inCity(item)">{{item}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="city-one2">
+          <ul class="am-u-sm-12 clplr">
+            <li class="am-u-sm-4 clplr"  v-for="(item,index) in this.$store.state.cityList2" :key="index">
+              <a href="javascript:void(0);" @click="inCity(item)">{{item}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div id="city">
-      <div class="city">苏州</div>
+      <div class="city" @click="xuan_city">{{this.$store.state.city}}</div>
     </div>
     <div class="banner">
       <mt-swipe :auto="4000">
@@ -198,17 +189,21 @@ export default {
       tabList: [],
       activeList: [],
       tabActive: 0,
-      goodsList: []
+      goodsList: [],
+      cityList1: [],
+      cityList2: [],
+      bool:false,
     };
   },
   mounted() {
-    // 获取城市的数据
-    this.GetPhotoLIst(res => {
-      // console.log(res)
-    });
-    Indicator.open();
+    // Indicator.open();
+    this.pageInit();
+  },
+  methods: {
+    pageInit () {
     // banner图的数据处理,并赋值给bannerList
     this.GetBannerList(res => {
+      this.bannerList = [];
       res.forEach(item => {
         item.ImgUrl = "https://res.bestcake.com/" + item.ImgUrl;
       });
@@ -216,12 +211,15 @@ export default {
     });
     // 获取主页的数据
     this.GetIndexCakeList(res => {
-      // console.log(res);
       // 获取icon的数据
-      var iconData = res.data.Tag.iconList.slice(0, 8);
-      this.iconList = iconData;
-      // console.log(this.iconList);
-
+      this.tabList = [];
+      this.goodsList = [];
+      this.iconList=[];
+      res.data.Tag.iconList.forEach(ele => {
+        if(ele.City.indexOf(this.$store.state.city) != -1){
+         this.iconList.push(ele)
+        }
+      })
       res.data.Tag.list.forEach(item => {
         if (item.TabType == 4) {
           // 获取tab栏数据
@@ -234,17 +232,26 @@ export default {
       // console.log(this.goodsList);
       // 初始化的时候,选定第一组数据
       this.setTab(0);
-      Indicator.close();
+      
     });
-  },
-  methods: {
+    },
+    xuan_city(){
+      this.bool = false;
+    },
+    // vuex城市参数配置
+    inCity(item){
+      this.$store.state.city = item;
+      this.pageInit();
+      Indicator.close();
+      this.bool = true;
+    },
     toShow(item) {
       //图片焦点图跳转详情页
       var data = {
         key: item.key || item.Name,
         c: item.SupplyNo || "NS"
       };
-       console.log(data)
+      console.log(data);
       this.$router.push({
         path: "/show",
         query: data
@@ -268,15 +275,16 @@ export default {
       // console.log(this.tabActive);
     },
     // =----------------------------以下为调取接口---------------------------
-    // 调取城市列表的接口
-    GetPhotoLIst(callback) {
-      this.$apis.GetPhotoLIst().then(res => {
-        callback(res);
-      });
-    },
     // 调取轮播接口
     GetBannerList(callback) {
-      this.$apis.GetBannerList().then(res => {
+      var data = {
+        v: new Date().getTime(),
+        c: 'Index',
+        m: 'GetBannerList',
+        Type: 2,
+        City: this.$store.state.city,
+      }
+      this.$apis.GetBannerList(data).then(res => {
         callback(res.data.Tag.List);
       });
     },
@@ -291,13 +299,66 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-// .city-box {
-//   background: rgba(0, 0, 0, .4);
-//   position: fixed;
-//   height: 100%;
-//   width: 100%;
-//   z-index: 1005;
-// }
+.city-box {
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1005;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .city-list {
+    background: rgb(255, 255, 255);
+    position: fixed;
+    width: 77.33vw;
+    left: 11.47vw;
+    top: 8.84vh;
+    z-index: 999999;
+    padding-bottom: 1.79vh;
+    .city-label1 {
+      width: 100%;
+      padding-top: 2.39vh;
+      margin-bottom: 4.4vh;
+      text-align: center;
+      display: block;
+      label {
+        display: inline-block;
+        height: 4.5vh;
+        font-weight: bold;
+        line-height: 3.37vh;
+        font-size: 4.26vw;
+        width: 28vw;
+        text-align: center;
+        border-bottom: 0.38vw solid rgb(51, 51, 51);
+      }
+    }
+    .city-one1,
+    .city-one2 {
+      ul {
+        li {
+          display: block;
+          float: left;
+          height: 9vh;
+          text-align: center;
+          a {
+            width: 25.66vw;
+            color: #333;
+            font-size: 3.73vw;
+            line-height: 9vh;;
+            display: block;
+          }
+        }
+      }
+    }
+    .clear {
+      float: left;
+      display: block;
+      width: 100%;
+      height: 1px;
+    }
+  }
+}
 
 #city {
   padding-left: r(15);
@@ -316,7 +377,9 @@ export default {
   font-size: r(32);
   border-radius: 0 r(6) r(6) 0;
 }
-
+.rm {
+  display: none;
+}
 .banner {
   width: 100%;
   height: r(190 * 2);
@@ -452,6 +515,8 @@ export default {
 }
 
 .pinzhi-box {
+  width: 100%;
+  box-sizing: border-box;
   .pinzhi-list {
     box-sizing: border-box;
     width: 100%;
@@ -459,7 +524,6 @@ export default {
     margin-bottom: 3.2vw;
     position: relative;
     padding: 0 4vw;
-
     .pinzhi-detail {
       float: left;
       margin-left: 4vw;
@@ -469,25 +533,21 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-
         .pinzhi-info {
           font-size: 3.2vw;
           color: #999;
           margin-bottom: 1.067vw;
         }
       }
-
       .pinzhi-tip {
         height: 4.8vw;
         font-size: 0;
-
         img {
           height: 4.8vw;
           margin-right: 0.4vw;
         }
       }
     }
-
     .pinzhi-img {
       width: 29.333vw;
       height: 29.333vw;
@@ -538,18 +598,18 @@ export default {
   }
 }
 .doc-icon-custom-2 .right {
-    float: left;
-    line-height: 6.5vw;
-    font-size: 3.73vw;
+  float: left;
+  line-height: 6.5vw;
+  font-size: 3.73vw;
 }
 .am-img-responsive {
-    display: block;
-    max-width: 100%;
-    height: auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 .doc-icon-custom-2 .left {
-    float: left;
-    width: 12%;
-    margin-right: 2.66vw;
+  float: left;
+  width: 12%;
+  margin-right: 2.66vw;
 }
 </style>

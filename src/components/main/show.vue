@@ -6,7 +6,7 @@
     <div class="swipe">
       <mt-swipe :auto="4000">
         <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
-          <img class="imgs" :src="item">
+          <img :class="['imgs',{active_b:active == index}]" :src="item" @click="active_b(index)">
         </mt-swipe-item>
       </mt-swipe>
     </div>
@@ -62,10 +62,10 @@
         </span>
       </span>
     </div>
-    <div class="bang">
-      <span>{{goodsInfo.Size}}</span>
+    <div class="bang" v-for="(item, index) in sizeList.infos.CakeType" :key="index">
+      <span>{{item.Size}}</span>
     </div>
-    <div class="cake_info" v-if="isLoad" >
+    <div class="cake_info" v-if="isLoad">
       <div class="cake_info_t">
         <span>
           <img src="https://res.bestcake.com/m-images/ww/detail/icon-custom-1.png?v=112">
@@ -90,9 +90,9 @@
     <div class="jj_box">
       <div class="jj_l">购买数量</div>
       <div class="jj_r">
-        <span class="add">+</span>
-        <span class="num">1</span>
-        <span class="sub">-</span>
+        <span class="add" @click="add">+</span>
+        <span class="num">{{this.$store.state.num}}</span>
+        <span class="sub" @click="sub">-</span>
       </div>
     </div>
     <!-- // 最后 -->
@@ -112,14 +112,13 @@
           已优惠:
           <i>0.00</i>
         </span>
-        <span class="price">{{goodsInfo.CurrentPrice}}</span>
+        <span class="price">{{goodsInfo.CurrentPrice*this.$store.state.num}}</span>
       </div>
       <div class="center">加入购物车</div>
       <div class="right">立即购买</div>
     </div>
   </div>
 </template>
-
 <script>
 import { Indicator } from "mint-ui";
 export default {
@@ -128,20 +127,36 @@ export default {
     return {
       bannerList: [],
       goodsInfo: [],
-      isLoad: false
+      isLoad: false,
+      active: 10,
+      sizeList: [],
     };
   },
   mounted() {
+    // Indicator.open();
     this.pageInit();
   },
   methods: {
+    // 购物数量加减逻辑
+    add() {
+      this.$store.commit("add");
+    },
+    sub() {
+      this.$store.commit("sub");
+    },
+    // 轮播点击变大
+    active_b(index) {
+      this.active = index;
+    },
     pageInit() {
       // 初始化执行
-      if (this.$route.query.c.indexOf("NS") != -1 ) {
+      if (this.$route.query.c.indexOf("NS") != -1) {
         this.GetNSCakeByName(res => {
+          this.sizeList =res.data.Tag;
+          //  __________________________________________________
           var goodsInfo = [];
           res.data.Tag.forEach(ele => {
-            if (ele.City == "苏州") {
+            if (ele.City == this.$store.state.city) {
               goodsInfo.push(ele);
             }
           });
@@ -151,54 +166,63 @@ export default {
           // ----------------------------------------------------------------------
 
           // 合适吃的人群的数据
-          goodsInfo[0].details_tips=goodsInfo[0].Details.details_tips;
+          goodsInfo[0].details_tips = goodsInfo[0].Details.details_tips;
           // 大小(磅)的数据
-          goodsInfo[0].configsize=goodsInfo[0].ProductConfig.pc.configsize;
+          goodsInfo[0].configsize = goodsInfo[0].ProductConfig.pc.configsize;
           // 适合多少人分享的数据
-          goodsInfo[0].configpeople=goodsInfo[0].ProductConfig.pc.configpeople;
+          goodsInfo[0].configpeople =
+            goodsInfo[0].ProductConfig.pc.configpeople;
           // 餐具的数据
-          goodsInfo[0].configware=goodsInfo[0].ProductConfig.pc.configware;
+          goodsInfo[0].configware = goodsInfo[0].ProductConfig.pc.configware;
           // 预定时间的数据
-          goodsInfo[0].configtips=goodsInfo[0].ProductConfig.pc.configtips;
+          goodsInfo[0].configtips = goodsInfo[0].ProductConfig.pc.configtips;
           this.goodsInfo = goodsInfo[0];
           this.isLoad = true;
         });
+        Indicator.close();
         this.setBannerList("ns-detail");
       } else if (this.$route.query.c.indexOf("KSK") != -1) {
         this.setBannerList("jd-detail");
         this.GetCakeByName(res => {
+          this.sizeList =res.data.Tag;
+          //  __________________________________________________
           let data = res.data.Tag.infos;
           this.goodsInfo = data;
-
           this.goodsInfo.Resource = data.Resourse;
-          this.goodsInfo.details_tips = '所有人群';
+          this.goodsInfo.details_tips = "所有人群";
           this.goodsInfo.Size = data.CakeType[0].Size;
-          this.goodsInfo.configsize = '直径13.66cm';
-          this.goodsInfo.configpeople = '适合4到5人食用'
-          this.goodsInfo.configware =data.CakeType[0].PackingList;
+          this.goodsInfo.configsize = "直径13.66cm";
+          this.goodsInfo.configpeople = "适合4到5人食用";
+          this.goodsInfo.configware = data.CakeType[0].PackingList;
           this.goodsInfo.configtips = data.Attention;
-          this.goodsInfo.CurrentPrice = data.CakeType[0].CurrentPrice
-          console.log(this.goodsInfo)
+          this.goodsInfo.CurrentPrice = data.CakeType[0].CurrentPrice;
           this.isLoad = true;
+          Indicator.close();
         });
       } else if (this.$route.query.c.indexOf("RP") != -1) {
         this.GetRuPCakeByName(res => {
-          let data = res.data.Tag[0]
+          console.log(res);
+          this.sizeList =res.data.Tag;
+          //  __________________________________________________
+          let data = res.data.Tag[0];
           this.goodsInfo = data;
-          this.goodsInfo.details_tips = '-';
+          this.goodsInfo.details_tips = "-";
           this.setBannerList("rp-detail");
+          Indicator.close();
         });
-      }else if (this.$route.query.c.indexOf("JZ") != -1) {
-          this.GetjzCakeInfo((res) => {
-            let data = res.data.Tag[0];
-            this.goodsInfo = data;
-            this.goodsInfo.CategoryName = data.KW;
-            this.goodsInfo.Resource = data.Resourse;
-            this.setBannerList("jz-detail");
-          })
+      } else if (this.$route.query.c.indexOf("JZ") != -1) {
+        this.GetjzCakeInfo(res => {
+          this.sizeList =res.data.Tag;
+          //  __________________________________________________
+          let data = res.data.Tag[0];
+          this.goodsInfo = data;
+          this.goodsInfo.CategoryName = data.KW;
+          this.goodsInfo.Resource = data.Resourse;
+          this.setBannerList("jz-detail");
+        });
+        Indicator.close();
       }
     },
-
     setBannerList(path) {
       //  星光游乐园/星光游乐园-1.jpg
       for (var i = 0; i < 4; i++) {
@@ -245,7 +269,15 @@ export default {
         callback(res);
       });
     },
-
+  },
+  watch:{
+    sizeList:{
+      handler(){
+        console.log(this.sizeList)
+        console.log(this.sizeList.infos.CakeType)
+      },
+      deep:true
+    }
   }
 };
 </script>
@@ -435,11 +467,11 @@ export default {
         display: inline-block;
         transform: translateY(0);
         font-style: normal;
-        -o-text-overflow:ellipsis;
+        -o-text-overflow: ellipsis;
         width: 30vw;
-        text-overflow:ellipsis;
-        overflow:hidden;
-        white-space:nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
     }
   }
@@ -516,8 +548,8 @@ export default {
   }
   .right {
     background: #02d3d6;
-    color :white;
-    font-weight:  bold;
+    color: white;
+    font-weight: bold;
   }
 }
 </style>

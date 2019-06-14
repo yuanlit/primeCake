@@ -8,7 +8,7 @@ const router = new VueRouter({
     path: '/',
     name: '/',
     meta: {
-      keepAlive: false
+      keepAlive: true
     },
     component: resolve => require(['@/components/home'], resolve),
     redirect: '/index',
@@ -16,7 +16,7 @@ const router = new VueRouter({
       path: 'index',
       name: 'index',
       meta: {
-        keepAlive: false,
+        keepAlive: true,
         title: '贝思客蛋糕'
       },
       component: resolve => require(['@/components/main/index'], resolve)

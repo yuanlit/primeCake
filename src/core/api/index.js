@@ -15,21 +15,15 @@ var v_data = params.v // 拿到当前时间戳
 var url01 = '/json1811.ashx'
 class Apis {
   // 轮播的接口
-  GetBannerList () {
+  GetBannerList (data) {
     return request({
       method: 'get',
       url: url01,
-      params: {
-        v: v_data,
-        c: 'Index',
-        m: 'GetBannerList',
-        Type: 2,
-        City: "苏州"
-      }
+      params: data
     })
   }
-  // 首页商品数据接口
-  GetIndexCakeList() {
+  // icon接口
+  GetIndexCakeList () {
     return request({
       method: 'get',
       url: url01,
@@ -60,7 +54,7 @@ class Apis {
       method: "get",
       url: url01,
       params: {
-        City: "苏州",
+        City: '苏州',
         ProName: data.ProName,
         c: "Product",
         m: "GetCakeByName",
@@ -74,7 +68,7 @@ class Apis {
       method: 'get',
       url: url01,
       params: {
-        City: '苏州',
+        City: "苏州",
         ProName: data.Name,
         c: 'IndexCenter',
         m: 'GetjzCakeInfo',
