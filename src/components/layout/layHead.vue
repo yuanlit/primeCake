@@ -8,6 +8,7 @@
         </router-link>
       </li>
     </ul>
+    <div class="tubiao"><span>{{this.$store.state.shopCart.N}}</span></div>
   </div>
 </template>
 
@@ -72,6 +73,23 @@ export default {
 </script>
 
 <style scoped lang= 'scss'>
+.tubiao {
+  width: 4.4vw;
+  height: 4.4vw;
+  background: rgba(255, 0, 0, 0.774);
+  border-radius: 50%;
+  z-index: 99999;
+  position: absolute;
+  top:-.8vw;
+  left: 63vw;
+  span {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: white;
+  }
+}
 #app {
   width: 100%;
   z-index: 1001;

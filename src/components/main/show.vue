@@ -6,7 +6,7 @@
     <div class="swipe">
       <mt-swipe :auto="4000">
         <mt-swipe-item v-for="(item,index) in bannerList" :key="index">
-          <img :class="['imgs',{active_b:active == index}]" :src="item" @click="active_b(index)">
+          <img :class="['imgs',{active:active == index}]" :src="item" @click="active(index)">
         </mt-swipe-item>
       </mt-swipe>
     </div>
@@ -62,8 +62,13 @@
         </span>
       </span>
     </div>
-    <div class="bang" v-for="(item, index) in sizeList.infos.CakeType" :key="index">
-      <span>{{item.Size}}</span>
+    <div v-if="isLoad" class="bang">
+      <span
+        :class="{active:activeInd == index}"
+        @click="active(item,index)"
+        v-for="(item, index) in Bang"
+        :key="index"
+      >{{item.Size||item}}</span>
     </div>
     <div class="cake_info" v-if="isLoad">
       <div class="cake_info_t">
@@ -90,8 +95,8 @@
     <div class="jj_box">
       <div class="jj_l">购买数量</div>
       <div class="jj_r">
-        <span class="add" @click="add">+</span>
-        <span class="num">{{this.$store.state.num}}</span>
+        <span class="add" @click="add(num)">+</span>
+        <span class="num">{{num}}</span>
         <span class="sub" @click="sub">-</span>
       </div>
     </div>
@@ -112,9 +117,9 @@
           已优惠:
           <i>0.00</i>
         </span>
-        <span class="price">{{goodsInfo.CurrentPrice*this.$store.state.num}}</span>
+        <span class="price">{{goodsInfo.CurrentPrice*this.num}}</span>
       </div>
-      <div class="center">加入购物车</div>
+      <div class="center" @click="add_carList">加入购物车</div>
       <div class="right">立即购买</div>
     </div>
   </div>
@@ -128,8 +133,11 @@ export default {
       bannerList: [],
       goodsInfo: [],
       isLoad: false,
-      active: 10,
+      activeInd: 0, // 选择磅值
       sizeList: [],
+      Bang: [],
+      num: 1,
+      sizeList_cart: []
     };
   },
   mounted() {
@@ -137,31 +145,56 @@ export default {
     this.pageInit();
   },
   methods: {
+    add_carList() {    // 加购,拿到数据
+      if (this.sizeList.length) {
+        this.izeList_cart = this.sizeList;
+      } else {
+        this.izeList_cart = this.sizeList.infos.CakeType;
+      }
+      let data = {
+        id:
+          this.izeList_cart[this.activeInd].ID ||
+          this.izeList_cart[this.activeInd].Id, //产品ID
+        Name: this.goodsInfo.Name, //产品详情图片拼接,//贝利
+        CurrentPrice: this.izeList_cart[this.activeInd].CurrentPrice, //产品价格
+        Size: this.izeList_cart[this.activeInd].Size, //产品规格
+        url: this.bannerList[0], //产品购物车显示图片
+        SupplyNo: this.izeList_cart[this.activeInd].SupplyNo, //产品货号类型
+        num: this.num  // 购买的数量
+      };
+      this.$store.commit("add",data);
+      console.log(this.$store.state.shopCart.list)
+    },
     // 购物数量加减逻辑
-    add() {
-      this.$store.commit("add");
+    add(num) {
+      this.num++;
     },
     sub() {
-      this.$store.commit("sub");
+      this.num--;
+      this.num = this.num <= 1 ? 1 : this.num;
     },
-    // 轮播点击变大
-    active_b(index) {
-      this.active = index;
+    // 点击切换磅值  数量初始化
+    active(item, index) {
+      this.num = 1;
+      this.activeInd = index;
+      this.goodsInfo.CurrentPrice = item.CurrentPrice;
+      this.goodsInfo.configware = item.PackingList || this.goodsInfo.configware;
     },
     pageInit() {
       // 初始化执行
       if (this.$route.query.c.indexOf("NS") != -1) {
         this.GetNSCakeByName(res => {
-          this.sizeList =res.data.Tag;
+          this.sizeList = res.data.Tag;
           //  __________________________________________________
           var goodsInfo = [];
           res.data.Tag.forEach(ele => {
             if (ele.City == this.$store.state.city) {
+              this.Bang = [ele.Size];
               goodsInfo.push(ele);
             }
           });
           // 将JSON数据处理成数组
-          goodsInfo[0].Details = JSON.parse(goodsInfo[0].Details);
+          goodsInfo[0].Details = JSON.parse(goodsInfo[0].Details) || [];
           goodsInfo[0].ProductConfig = JSON.parse(goodsInfo[0].ProductConfig);
           // ----------------------------------------------------------------------
 
@@ -177,14 +210,14 @@ export default {
           // 预定时间的数据
           goodsInfo[0].configtips = goodsInfo[0].ProductConfig.pc.configtips;
           this.goodsInfo = goodsInfo[0];
-          this.isLoad = true;
         });
-        Indicator.close();
         this.setBannerList("ns-detail");
+        this.isLoad = true;
       } else if (this.$route.query.c.indexOf("KSK") != -1) {
         this.setBannerList("jd-detail");
         this.GetCakeByName(res => {
-          this.sizeList =res.data.Tag;
+          this.sizeList = res.data.Tag;
+          this.Bang = this.sizeList.infos.CakeType;
           //  __________________________________________________
           let data = res.data.Tag.infos;
           this.goodsInfo = data;
@@ -197,22 +230,20 @@ export default {
           this.goodsInfo.configtips = data.Attention;
           this.goodsInfo.CurrentPrice = data.CakeType[0].CurrentPrice;
           this.isLoad = true;
-          Indicator.close();
         });
       } else if (this.$route.query.c.indexOf("RP") != -1) {
         this.GetRuPCakeByName(res => {
-          console.log(res);
-          this.sizeList =res.data.Tag;
+          // console.log(res);
+          this.sizeList = res.data.Tag;
           //  __________________________________________________
           let data = res.data.Tag[0];
           this.goodsInfo = data;
           this.goodsInfo.details_tips = "-";
           this.setBannerList("rp-detail");
-          Indicator.close();
         });
       } else if (this.$route.query.c.indexOf("JZ") != -1) {
         this.GetjzCakeInfo(res => {
-          this.sizeList =res.data.Tag;
+          this.sizeList = res.data.Tag;
           //  __________________________________________________
           let data = res.data.Tag[0];
           this.goodsInfo = data;
@@ -220,7 +251,6 @@ export default {
           this.goodsInfo.Resource = data.Resourse;
           this.setBannerList("jz-detail");
         });
-        Indicator.close();
       }
     },
     setBannerList(path) {
@@ -268,15 +298,14 @@ export default {
       this.$apis.GetjzCakeInfo(data).then(res => {
         callback(res);
       });
-    },
+    }
   },
-  watch:{
-    sizeList:{
-      handler(){
-        console.log(this.sizeList)
-        console.log(this.sizeList.infos.CakeType)
+  watch: {
+    sizeList: {
+      handler() {
+        // console.log(this.sizeList);
       },
-      deep:true
+      deep: true
     }
   }
 };
@@ -432,16 +461,27 @@ export default {
   padding: 5vw;
   span {
     display: inline-block;
+    border-radius: 2px;
+    width: 18vw;
+    height: 8vw;
+    text-align: center;
+    line-height: 8vw;
+    margin: 2vw 5.6vw;
+    font-size: 3.73vw;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  .active {
     background: #02d3d6;
     border-radius: 2px;
     color: #fff;
     border: 1px solid #02d3d6;
-    width: 18vw;
-    height: 8vw;
-    font-size: 3vw;
-    text-align: center;
-    line-height: 8vw;
   }
+}
+.claer {
+  display: block;
+  width: 18vw;
+  height: 8vw;
 }
 .cake_info {
   border-bottom: r(25) solid #f5f5f2;

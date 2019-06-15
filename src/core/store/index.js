@@ -6,29 +6,60 @@ Vue.use(Vuex)
 
 // 定义属性值  data
 const state = {
-  num: 1,
-  cartList: [],
+  shopCart: { 'N': 0, 'list': [] },
   city: '苏州',
   cityList1: ['上海', '北京', '天津', '重庆'],
   cityList2: ['苏州', '无锡', '南京', '杭州', '宁波', '绍兴', '成都', '常州', '台州', '嘉兴']
 }
 // 定义同步方法
 const mutations = {
-  City_qaunju (state) {
-    state.city = item
-  },
   add (state, data) {
-    state.num++
+    // "list": []
+    if (state.shopCart.list.length > 0) {
+      var con = true;
+      state.shopCart.list.forEach(ele => {
+        if (ele.id == data.id) {
+          ele.num += data.num
+          con = false
+          return
+        }
+      })
+      if (con) {
+        state.shopCart.list.push(data)
+      }
+      state.shopCart.N += data.num
+    } else {
+      state.shopCart.list.push(data)
+      state.shopCart.N += data.num;
+    }
   },
-  sub (state, data) {
-    state.num--
-    state.num = state.num <= 1 ? 1 : state.num
+  // push (state, data) {
+  //   state.shopCart.list.forEach(ele => {
+  //     if (ele.id == data) {
+  //       ele.num--
+  //       if (ele.num == 0) {
+  //         ele.num = 1
+  //       }
+  //     }
+  //   })
+  // },
+  // sub (state, data) {
+  //   state.shopCart.list.forEach(ele => {
+  //     if (ele.id == data) {
+  //       ele.num++
+  //     }
+  //   })
+  // },
+  City_qaunju (state, item) {
+    state.city = item
   }
 }
+
+//       ------------------------与你无瓜
 // 定义 computed(属性计算)
 const getters = {
   count (state) {
-    return state.num * state.price
+    // return state.num * state.price
   }
 }
 

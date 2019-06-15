@@ -7,7 +7,11 @@
         </div>
         <div class="city-one1">
           <ul class="am-u-sm-12 clplr">
-            <li class="am-u-sm-4 clplr" v-for="(item,index) in this.$store.state.cityList1" :key="index">
+            <li
+              class="am-u-sm-4 clplr"
+              v-for="(item,index) in this.$store.state.cityList1"
+              :key="index"
+            >
               <a href="javascript:void(0);" @click="inCity(item)">{{item}}</a>
             </li>
           </ul>
@@ -15,7 +19,11 @@
         <div class="clear"></div>
         <div class="city-one2">
           <ul class="am-u-sm-12 clplr">
-            <li class="am-u-sm-4 clplr"  v-for="(item,index) in this.$store.state.cityList2" :key="index">
+            <li
+              class="am-u-sm-4 clplr"
+              v-for="(item,index) in this.$store.state.cityList2"
+              :key="index"
+            >
               <a href="javascript:void(0);" @click="inCity(item)">{{item}}</a>
             </li>
           </ul>
@@ -100,13 +108,8 @@
     <div class="special-title">没尝过这些美味的人生，是不完美的</div>
     <!--~~~~~~~~~~~~~~~~~~~~~~~~ 品质甄选商品列表 ~~~~~~~~~~~~-->
     <div class="pinzhi-box">
-      <div
-        class="pinzhi-list"
-        v-for="(item, index) in goodsList"
-        :key="index"
-        @click="toShow(item)"
-      >
-        <div class="pinzhi-img">
+      <div class="pinzhi-list" v-for="(item, index) in goodsList" :key="index">
+        <div class="pinzhi-img" @click="toShow(item)">
           <img v-lazy="item.ImgUrl">
         </div>
         <div class="pinzhi-detail">
@@ -128,7 +131,7 @@
             </div>
           </div>
         </div>
-        <div id="shopCart" class="pinzhi-cart">
+        <div id="shopCart" class="pinzhi-cart" @click="add_cartList(item, $event)">
           <img src="https://res.bestcake.com/m-images-2/pinzhi-cart.png">
         </div>
       </div>
@@ -145,7 +148,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { Indicator } from "mint-ui";
 // mock--------------------------mock
@@ -192,7 +194,7 @@ export default {
       goodsList: [],
       cityList1: [],
       cityList2: [],
-      bool:false,
+      bool: false
     };
   },
   mounted() {
@@ -200,46 +202,81 @@ export default {
     this.pageInit();
   },
   methods: {
-    pageInit () {
-    // banner图的数据处理,并赋值给bannerList
-    this.GetBannerList(res => {
-      this.bannerList = [];
-      res.forEach(item => {
-        item.ImgUrl = "https://res.bestcake.com/" + item.ImgUrl;
-      });
-      this.bannerList = res;
-    });
-    // 获取主页的数据
-    this.GetIndexCakeList(res => {
-      // 获取icon的数据
-      this.tabList = [];
-      this.goodsList = [];
-      this.iconList=[];
-      res.data.Tag.iconList.forEach(ele => {
-        if(ele.City.indexOf(this.$store.state.city) != -1){
-         this.iconList.push(ele)
-        }
-      })
-      res.data.Tag.list.forEach(item => {
-        if (item.TabType == 4) {
-          // 获取tab栏数据
-          this.tabList.push(item);
-        } else {
-          // 获取品质甄选数据
-          this.goodsList.push(item);
-        }
-      });
-      // console.log(this.goodsList);
-      // 初始化的时候,选定第一组数据
-      this.setTab(0);
-      
-    });
+        flay(e,data) {
+         var flyer=$('<img style="width:20vw;height:20vw" class="flyer-img" src='+data+'>');
+         var top=$(window).scrollTop();
+         var dh=event.pageY;
+         var newh=dh-top;
+        //  购物车节点位置,决定图片飘的位置
+         var oBtn=$(".tubiao").offset();
+         var newdh=oBtn.top-top; 
+        flyer.fly({   
+            start: {
+                left: event.pageX,//抛物体起点横坐标   
+                top:newh //抛物体起点纵坐标   
+            },
+            end: {
+                left: oBtn.left-30,//抛物体终点横坐标   
+                top: newdh //抛物体终点纵坐标   
+            },
+            onEnd: function() {   
+                this.destory(); //销毁抛物体   
+            }
+        });
     },
-    xuan_city(){
+    add_cartList(item,e) {
+      let data = {
+        id:item.Pid,//产品ID
+        Name: item.Name, //产品详情图片拼接,//贝利
+        CurrentPrice: item.CurrentPrice, //产品价格
+        Size: item.Size, //产品规格
+        url: item.ImgUrl, //产品购物车显示图片
+        SupplyNo: item.SupplyNo, //产品货号类型
+        num: this.num||1 // 购买的数量
+      };
+      this.flay(e,data.url);
+      this.$store.commit("add",data)
+      console.log(this.$store.state.shopCart.list)
+    },
+    pageInit() {
+      // banner图的数据处理,并赋值给bannerList
+      this.GetBannerList(res => {
+        this.bannerList = [];
+        res.forEach(item => {
+          item.ImgUrl = "https://res.bestcake.com/" + item.ImgUrl;
+        });
+        this.bannerList = res;
+      });
+      // 获取主页的数据
+      this.GetIndexCakeList(res => {
+        // 获取icon的数据
+        this.tabList = [];
+        this.goodsList = [];
+        this.iconList = [];
+        res.data.Tag.iconList.forEach(ele => {
+          if (ele.City.indexOf(this.$store.state.city) != -1) {
+            this.iconList.push(ele);
+          }
+        });
+        res.data.Tag.list.forEach(item => {
+          if (item.TabType == 4) {
+            // 获取tab栏数据
+            this.tabList.push(item);
+          } else {
+            // 获取品质甄选数据
+            this.goodsList.push(item);
+          }
+        });
+        // console.log(this.goodsList);
+        // 初始化的时候,选定第一组数据
+        this.setTab(0);
+      });
+    },
+    xuan_city() {
       this.bool = false;
     },
     // vuex城市参数配置
-    inCity(item){
+    inCity(item) {
       this.$store.state.city = item;
       this.pageInit();
       Indicator.close();
@@ -279,11 +316,11 @@ export default {
     GetBannerList(callback) {
       var data = {
         v: new Date().getTime(),
-        c: 'Index',
-        m: 'GetBannerList',
+        c: "Index",
+        m: "GetBannerList",
         Type: 2,
-        City: this.$store.state.city,
-      }
+        City: this.$store.state.city
+      };
       this.$apis.GetBannerList(data).then(res => {
         callback(res.data.Tag.List);
       });
@@ -299,6 +336,10 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+.flyer-img {
+  width: 5vw;
+  height: 5vw;
+}
 .city-box {
   background: rgba(0, 0, 0, 0.4);
   position: fixed;
@@ -345,7 +386,7 @@ export default {
             width: 25.66vw;
             color: #333;
             font-size: 3.73vw;
-            line-height: 9vh;;
+            line-height: 9vh;
             display: block;
           }
         }

@@ -20,8 +20,8 @@
     </div>
     <div class="goods_box">
       <ul>
-        <li v-for="(item, index) in activeList" :key="index" @click="toShow(item)">
-          <img :src="item.imgUrl">
+        <li v-for="(item, index) in activeList" :key="index">
+          <img @click="toShow(item)" :src="item.imgUrl">
           <div class="list-product-b">
             <span>{{item.Name}}</span>
           </div>
@@ -35,6 +35,7 @@
             <span style="color: rgb(188, 188, 188); font-size: 3.2vw; margin-left: 1.067vw;">/ 1.2磅</span>
             <div class="list-product-e">
               <img
+              @click="add_cartList(item, $event)"
                 src="https://res.bestcake.com\m-images-2\list-cart.png?v=1"
                 class="am-img-responsive"
               >
@@ -84,14 +85,52 @@ export default {
     this.pageInit();
   },
   methods: {
-       toShow(item) {
+     flay(e,data) {
+         var flyer=$('<img style="width:20vw;height:20vw" class="flyer-img" src='+data+'>');
+         var top=$(window).scrollTop();
+         var dh=event.pageY;
+         var newh=dh-top;
+        //  购物车节点位置,决定图片飘的位置
+         var oBtn=$(".tubiao").offset();
+         var newdh=oBtn.top-top; 
+        flyer.fly({   
+            start: {
+                left: event.pageX,//抛物体起点横坐标   
+                top:newh //抛物体起点纵坐标   
+            },
+            end: {
+                left: oBtn.left-30,//抛物体终点横坐标   
+                top: newdh //抛物体终点纵坐标   
+            },
+            onEnd: function() {
+                this.destory(); //销毁抛物体   
+            }
+        });
+    },
+    // 加入购物车
+    add_cartList(item, e) {
+      console.log(item)
+      let data = {
+        id: item.ID, //产品ID
+        Name: item.Name, //产品详情图片拼接,//贝利
+        CurrentPrice: item.CurrentPrice, //产品价格
+        Size: item.Size, //产品规格
+        url: item.imgUrl, //产品购物车显示图片
+        SupplyNo: item.SupplyNo, //产品货号类型
+        num: this.num || 1 // 购买的数量
+      };
+      this.flay(e,data.url);
+      // console.log(data);
+      this.$store.commit("add",data)
+    },
+    toShow(item) {
       //图片焦点图跳转详情页
-     
+
       var data = {
         key: item.key || item.Name,
         c: item.SupplyNo || "NS"
       };
-       console.log(data)
+      console.log(data);
       this.$router.push({
         path: "/show",
         query: data
@@ -232,7 +271,6 @@ export default {
         }
       }
       .list-product-c {
-        
         width: 32vw;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -244,22 +282,21 @@ export default {
           color: #999;
           padding-left: 2vw;
         }
-        
       }
       .list-product-d {
-          position: relative;
-          .list-product-e {
-            width: 5.334vw;
-            height: 5.334vw;
-            position: absolute;
-            right: 1vw;
-            bottom: 0vw;
-            img {
-              display: block;
-              max-width: 100%;
-              height: auto;
-            }
+        position: relative;
+        .list-product-e {
+          width: 5.334vw;
+          height: 5.334vw;
+          position: absolute;
+          right: 1vw;
+          bottom: 0vw;
+          img {
+            display: block;
+            max-width: 100%;
+            height: auto;
           }
+        }
       }
     }
   }
