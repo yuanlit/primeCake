@@ -5,7 +5,7 @@
         <ul>
           <li v-for="(item, index) in cart_data" :key="index">
             <div class="l">
-              <input type="checkbox">
+              <input @click="option" type="checkbox" v-model="item.bool">
             </div>
             <div class="c">
               <img style="background:#fffff;" :src="item.url" alt>
@@ -23,10 +23,10 @@
                   </i>
                   <span style="background:#fffff;">{{item.num}}</span>
                   <i style="background:#fffff;">
-                    <img 
-                    src="https://res.bestcake.com\m-images\order\add.png"
-                     @click="add_num(item.id)"
-                     >
+                    <img
+                      src="https://res.bestcake.com\m-images\order\add.png"
+                      @click="add_num(item.id)"
+                    >
                   </i>
                 </span>
               </div>
@@ -148,14 +148,14 @@
     </div>
     <div class="shop_box">
       <div class="shop_xz">
-        <input type="checkbox">
+        <input type="checkbox" v-model="allSel" @click="allOption">
       </div>
       <div class="shop_qx">全选</div>
-      <div class="shop_del">清空</div>
+      <div class="shop_del" @click="delAll">清空</div>
       <div class="shop_money">
         <div class="money_t">
           合计:&nbsp;&nbsp;
-          <span>123.00</span>
+          <span>{{allPrice}}.00</span>
         </div>
         <div class="money_b">已优惠:&nbsp;&nbsp;0.00</div>
       </div>
@@ -164,30 +164,99 @@
   </div>
 </template>
 <script>
+import Store from "storejs"
 export default {
   data() {
     return {
-      cart_data: []
+      cart_data: [],
+      optionList: [],
+      bool: "",
+      allSel:false,
     };
   },
   mounted() {
+    setInterval( this.pageInit(),1000)
     this.pageInit();
   },
   methods: {
+    //  全选
+    allOption () {
+      var selList = [];
+      var num =0;
+      this.cart_data.forEach(item => {
+        item.bool = !this.allSel;
+          if (item.bool) {
+            selList.push(item);
+            
+          }
+      })
+      //  到这了
+      selList.forEach(el =>  {
+              console.log(el)
+      })
+      this.$store.state.N = num;
+      this.optionList = selList;
+    },
+    // 选择框
+    option() {
+      var selList = [];
+      setTimeout(() => {
+        // 函数执行时异步
+        this.cart_data.map(item => {
+          if (item.bool) {
+            selList.push(item);
+          }
+        });
+        // vue.$set()
+        this.optionList = selList;
+      }, 80);
+    },
+    // 页面初始化
     pageInit() {
       let data = JSON.parse(window.localStorage.getItem("data"));
       if (data) {
-        this.cart_data = data.list;
+        data.forEach(ele => {
+          ele.bool = false;
+        });
+        this.cart_data = data;
       }
     },
-    // 商品数量的加减
+    // 商品数量减一
     sub_num(id) {
       this.$store.commit("numSub", id);
       this.pageInit();
     },
+    // 商品数量加一
     add_num(id) {
       this.$store.commit("numAdd", id);
       this.pageInit();
+    },
+    delAll () {
+      Store.clear();
+      let data = [];
+      this.cart_data.forEach(ele => {
+        if(ele.bool == false) {
+          data.push(ele);
+        }
+      });
+      Store.set("data",data)
+      this.pageInit();
+    },
+  },
+  // 属性计算，得出总价
+  computed: {
+    //  computed 要在视图进行调用一波
+    allPrice() {
+      let allPrice = 0;
+      this.optionList.map(item => {
+        allPrice += item.num * item.CurrentPrice;
+      });
+      if (this.optionList.length == this.cart_data.length) {
+        this.allSel = true;
+      } else {
+        this.allSel = false;
+      }
+      return allPrice;
     }
   }
 };

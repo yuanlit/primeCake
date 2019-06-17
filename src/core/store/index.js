@@ -7,10 +7,7 @@ Vue.use(Vuex)
 // 定义属性值  data
 const state = {
   // 用于给window.localstorege固定格式
-  shopCart: {
-    'N': 0,
-    'list': []
-  },
+  shopCart: [],
   N:'...',
   city: '苏州',
   cityList1: ['上海', '北京', '天津', '重庆'],
@@ -20,15 +17,18 @@ const state = {
 const mutations = {
   addCartList (state, data) {
     let jsonData = window.localStorage.getItem('data');
-    if (!jsonData) {
-      state.shopCart.list.push(data)
-      state.shopCart.N += data.num;
+    let obj = JSON.parse(jsonData);
+    let num = 0;
+    if (obj.length === 0||!jsonData) {
+      state.shopCart.push(data)
       window.localStorage.setItem("data", JSON.stringify(state.shopCart));
+      state.N = data.num;
       return;
     }
     let oData = JSON.parse(jsonData);
     var con = true;
-    oData.list.forEach(ele => {
+    oData.forEach(ele => {
+      num += ele.num;
       if (ele.id == data.id) {
         ele.num += data.num
         con = false
@@ -36,49 +36,43 @@ const mutations = {
       }
     })
     if (con) {
-      oData.list.push(data)
+      oData.push(data)
+      console.log(data)
+      state.N = num;
     }
-    oData.N += data.num
     window.localStorage.setItem("data", JSON.stringify(oData));
-    state.N = oData.N;
-    console.log(JSON.parse(window.localStorage.getItem('data')))
+    state.N = num;
+    // console.log(JSON.parse(window.localStorage.getItem('data')))
   },
   numSub (state, id) {
     let oData = JSON.parse(window.localStorage.getItem('data'));
-    oData.N = 0;
-    oData.list.forEach(ele => {
+    let num = 0;
+    oData.forEach(ele => {
       if (ele.id == id) {
         ele.num--
         if (ele.num == 0) {
           ele.num = 1
         }
       }
-      oData.N += ele.num;
+      num += ele.num;
     })
     // 用于修改小图标的值
-    state.N = oData.N;
+    state.N = num;
     window.localStorage.setItem("data", JSON.stringify(oData));
   },
   numAdd (state, id) {
     let oData = JSON.parse(window.localStorage.getItem('data'));
-    oData.N = 0;
-    oData.list.forEach(ele => {
+    let num = 0;
+    oData.forEach(ele => {
       if (ele.id == id) {
         ele.num++
       }
-      oData.N += ele.num;
+      num += ele.num;
     })
     // 用于修改小图标的值
-    state.N = oData.N;
+    state.N = num;
     window.localStorage.setItem("data", JSON.stringify(oData));
   },
-  // sub (state, data) {
-  //   state.shopCart.list.forEach(ele => {
-  //     if (ele.id == data) {
-  //       ele.num++
-  //     }
-  //   })
-  // },
   City_qaunju(state, item) {
     state.city = item
   }
