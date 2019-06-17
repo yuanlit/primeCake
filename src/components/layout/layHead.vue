@@ -8,6 +8,9 @@
         </router-link>
       </li>
     </ul>
+    <div class="tubiao">
+      <span>{{this.$store.state.N}}</span>
+    </div>
   </div>
 </template>
 
@@ -17,7 +20,8 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      active:8,
+      active: 8,
+      N: '',
       nav: [
         {
           url: [
@@ -28,21 +32,21 @@ export default {
           path: "/index"
         },
         {
-           url: [
+          url: [
             "https://res.bestcake.com/m-images/ww/foot/foot-menu-b-1.png",
             "https://res.bestcake.com/m-images/ww/foot/foot-menu-b-2.png"
           ],
           path: "/classify"
         },
         {
-           url: [
+          url: [
             "https://res.bestcake.com/m-images/ww/foot/foot-menu-c-1.png",
             "https://res.bestcake.com/m-images/ww/foot/foot-menu-c-2.png"
           ],
           path: "/cartList"
         },
         {
-           url: [
+          url: [
             "https://res.bestcake.com/m-images/ww/foot/foot-menu-d-1.png",
             "https://res.bestcake.com/m-images/ww/foot/foot-menu-d-2.png"
           ],
@@ -51,18 +55,40 @@ export default {
       ]
     };
   },
-  mounted(){
-    this.active=100;
+  mounted() {
+    this.pageInit();
   },
   methods: {
-    change (index) {
+    pageInit() {
+      this.active = 100;
+      // let jsonData = window.localStorage.getItem('data');
+      // let oData = JSON.parse(jsonData);
+    },
+    change(index) {
       this.active = index;
+    }
   }
-  }
-}
+};
 </script>
 
 <style scoped lang= 'scss'>
+.tubiao {
+  width: 4.4vw;
+  height: 4.4vw;
+  background: rgba(255, 0, 0, 0.774);
+  border-radius: 50%;
+  z-index: 99999;
+  position: absolute;
+  top: -0.8vw;
+  left: 63vw;
+  span {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: white;
+  }
+}
 #app {
   width: 100%;
   z-index: 1001;
