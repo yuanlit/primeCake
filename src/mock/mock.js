@@ -1,26 +1,31 @@
 import axios from 'axios'
-// import MockAdapter from 'axios-mock-adapter'
-// import GetIndexCakeList from '@/mock/data/GetIndexCakeList_kong.vue'
-// let mock = new MockAdapter(axios)
+import MockAdapter from 'axios-mock-adapter'
+import {userList} from './data/userList'
+import Store from 'storejs'
 
-// 可以设置,延迟时间
-// mock = new MockAdapter(axios, {
-//   delayResponse: '500'
-// })
+let mock = new MockAdapter(axios)
 
-// mock.onGet('/success').reply(config => {
-//   // console.log('我进入了mock')
-//   return [200, {
-//     code: 200,
-//     msg: 'success'
-//   }]
-// })
-// mock.onGet('/GetIndexCakeList').reply(config => {
-//   console.log('我进入了mock')
-//   return [200, {
-//     code: 200,
-//     msg: GetIndexCakeList
-//   }]
-// })
+mock.onPost('/login').reply(config => {
+  var reqdata = JSON.parse(config.data).data
+  for (var i = 0; i < userList.length; i++) {
+    if (userList[i].username === reqdata.uname) {
+      if (userList[i].password === reqdata.upwd) {
+        return [200, {code: 1, data: userList[i], msg: 'success'}]
+      } else {
+        return [200, {code: 2, msg: '密码错误'}]
+      }
+    }
+  }
+  return [200, {code: 0, msg: '账号不存在'}]
+})
+
+mock.onPost('/test').reply(config => {
+  var reqdata = JSON.parse(config.data).data
+  userList.push(reqdata)
+  Store.set('userList', userList)
+  return [200, {code: 1, msg: '注册成功'}]
+  // 做一个数据效验
+})
 
 export default axios
+// 注意暴露axios

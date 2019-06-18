@@ -120,15 +120,15 @@
         <span class="price">{{goodsInfo.CurrentPrice*this.num}}</span>
       </div>
       <div class="center" @click="add_carList">加入购物车</div>
-      <div class="right">立即购买</div>
+      <div class="right" v-get-this>立即购买</div>
     </div>
   </div>
 </template>
 <script>
-import { Indicator, MessageBox } from "mint-ui";
+import { Indicator, MessageBox } from 'mint-ui'
 export default {
-  name: "HelloWorld",
-  data() {
+  name: 'HelloWorld',
+  data () {
     return {
       bannerList: [],
       goodsInfo: [],
@@ -138,55 +138,55 @@ export default {
       Bang: [],
       num: 1,
       sizeList_cart: []
-    };
+    }
   },
-  mounted() {
-    this.pageInit();
+  mounted () {
+    this.pageInit()
   },
   methods: {
-    add_carList() {
+    add_carList () {
       // 加购,拿到数据
       console.log(this.sizeList)
-      if(this.sizeList.length) {
-        this.sizeList_cart = this.sizeList;
+      if (this.sizeList.length) {
+        this.sizeList_cart = this.sizeList
       } else {
-        this.sizeList_cart = this.sizeList.infos.CakeType;
+        this.sizeList_cart = this.sizeList.infos.CakeType
       }
       let data = {
         id:
           this.sizeList_cart[this.activeInd].ID ||
-          this.sizeList_cart[this.activeInd].Id, //产品ID
-        Name: this.goodsInfo.Name, //产品详情图片拼接,//贝利
-        CurrentPrice: this.sizeList_cart[this.activeInd].CurrentPrice, //产品价格
-        Size: this.sizeList_cart[this.activeInd].Size, //产品规格
-        url: this.bannerList[0], //产品购物车显示图片
-        SupplyNo: this.sizeList_cart[this.activeInd].SupplyNo, //产品货号类型
+          this.sizeList_cart[this.activeInd].Id, // 产品ID
+        Name: this.goodsInfo.Name, // 产品详情图片拼接,//贝利
+        CurrentPrice: this.sizeList_cart[this.activeInd].CurrentPrice, // 产品价格
+        Size: this.sizeList_cart[this.activeInd].Size, // 产品规格
+        url: this.bannerList[0], // 产品购物车显示图片
+        SupplyNo: this.sizeList_cart[this.activeInd].SupplyNo, // 产品货号类型
         num: this.num // 购买的数量
-      };
-      this.$store.commit("addCartList", data);
-      MessageBox.confirm("加购成功!,是否立即结算?").then(action => {
-         this.$router.push({
-          path: "/cartList",
+      }
+      this.$store.commit('addCartList', data)
+      MessageBox.confirm('加购成功!,是否立即结算?').then(action => {
+        this.$router.push({
+          path: '/cartList',
           query: data
-        });
-      });
+        })
+      })
     },
     // 购物数量加减逻辑
-    add(num) {
-      this.num++;
+    add (num) {
+      this.num++
     },
-    sub() {
-      this.num--;
-      this.num = this.num <= 1 ? 1 : this.num;
+    sub () {
+      this.num--
+      this.num = this.num <= 1 ? 1 : this.num
     },
     // 点击切换磅值  数量初始化
-    active(item, index) {
-      this.num = 1;
-      this.activeInd = index;
-      this.goodsInfo.CurrentPrice = item.CurrentPrice;
-      this.goodsInfo.configware = item.PackingList || this.goodsInfo.configware;
+    active (item, index) {
+      this.num = 1
+      this.activeInd = index
+      this.goodsInfo.CurrentPrice = item.CurrentPrice
+      this.goodsInfo.configware = item.PackingList || this.goodsInfo.configware
     },
-    pageInit() {
+    pageInit () {
        Indicator.open({
         text: "玩命加载中...",
         spinnerType: "fading-circle"
