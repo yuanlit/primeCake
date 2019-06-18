@@ -15,13 +15,14 @@
 </template>
 
 <script>
+import Store from "storejs"
 var num = 1;
 export default {
   name: "HelloWorld",
   data() {
     return {
       active: 8,
-      N: '',
+      N: "",
       nav: [
         {
           url: [
@@ -61,6 +62,15 @@ export default {
   methods: {
     pageInit() {
       this.active = 100;
+      // 初始化下标
+      let data = Store.get("data");
+      var num1 = 0;
+      if (data) {
+        data.forEach(ele => {
+          num1 += ele.num;
+        });
+        this.$store.state.N = num1;
+      }
       // let jsonData = window.localStorage.getItem('data');
       // let oData = JSON.parse(jsonData);
     },

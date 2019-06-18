@@ -124,7 +124,6 @@ export default {
     },
     toShow(item) {
       //图片焦点图跳转详情页
-
       var data = {
         key: item.key || item.Name,
         c: item.SupplyNo || "NS"

@@ -164,37 +164,29 @@
   </div>
 </template>
 <script>
-import Store from "storejs"
+import Store from "storejs";
 export default {
   data() {
     return {
       cart_data: [],
       optionList: [],
       bool: "",
-      allSel:false,
+      allSel: true
     };
   },
   mounted() {
-    setInterval( this.pageInit(),1000)
     this.pageInit();
   },
   methods: {
     //  全选
-    allOption () {
+    allOption() {
       var selList = [];
-      var num =0;
       this.cart_data.forEach(item => {
         item.bool = !this.allSel;
-          if (item.bool) {
-            selList.push(item);
-            
-          }
-      })
-      //  到这了
-      selList.forEach(el =>  {
-              console.log(el)
-      })
-      this.$store.state.N = num;
+        if (item.bool) {
+          selList.push(item);
+        }
+      });
       this.optionList = selList;
     },
     // 选择框
@@ -213,12 +205,20 @@ export default {
     },
     // 页面初始化
     pageInit() {
-      let data = JSON.parse(window.localStorage.getItem("data"));
+      let data = Store.get("data");
+      let selList = [];
+      var num1 = 0;
       if (data) {
         data.forEach(ele => {
+          if (ele.bool) {
+            selList.push(item);
+          }
+          num1 += ele.num;
           ele.bool = false;
         });
         this.cart_data = data;
+        this.optionList = selList;
+        this.$store.state.N = num1;
       }
     },
     // 商品数量减一
@@ -231,17 +231,20 @@ export default {
       this.$store.commit("numAdd", id);
       this.pageInit();
     },
-    delAll () {
+    // 删除
+    delAll() {
       Store.clear();
+      let num1 = 0;
       let data = [];
       this.cart_data.forEach(ele => {
-        if(ele.bool == false) {
+        if (ele.bool == false) {
+          num1 += ele.num;
           data.push(ele);
         }
       });
-      Store.set("data",data)
+      Store.set("data", data);
       this.pageInit();
-    },
+    }
   },
   // 属性计算，得出总价
   computed: {

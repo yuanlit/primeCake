@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Store from 'storejs'
 // import apis from "@/core/api/index"
 // console.log("OK");
 Vue.use(Vuex)
@@ -16,19 +17,17 @@ const state = {
 // 定义同步方法
 const mutations = {
   addCartList (state, data) {
-    let jsonData = window.localStorage.getItem('data');
-    let obj = JSON.parse(jsonData);
+    let obj = Store.get("data");
     let num = 0;
-    if (obj.length === 0||!jsonData) {
+    console.log(obj)
+    if (!obj) {
       state.shopCart.push(data)
       window.localStorage.setItem("data", JSON.stringify(state.shopCart));
       state.N = data.num;
       return;
     }
-    let oData = JSON.parse(jsonData);
     var con = true;
-    oData.forEach(ele => {
-      num += ele.num;
+    obj.forEach(ele => {
       if (ele.id == data.id) {
         ele.num += data.num
         con = false
@@ -36,13 +35,13 @@ const mutations = {
       }
     })
     if (con) {
-      oData.push(data)
-      console.log(data)
-      state.N = num;
+      obj.push(data)
     }
-    window.localStorage.setItem("data", JSON.stringify(oData));
+    obj.forEach(ele => {
+      num += ele.num;
+    })
     state.N = num;
-    // console.log(JSON.parse(window.localStorage.getItem('data')))
+    Store.set("data",obj);
   },
   numSub (state, id) {
     let oData = JSON.parse(window.localStorage.getItem('data'));

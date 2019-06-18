@@ -146,7 +146,8 @@ export default {
   methods: {
     add_carList() {
       // 加购,拿到数据
-      if (this.sizeList.length) {
+      console.log(this.sizeList)
+      if(this.sizeList.length) {
         this.sizeList_cart = this.sizeList;
       } else {
         this.sizeList_cart = this.sizeList.infos.CakeType;
