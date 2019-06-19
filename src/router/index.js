@@ -57,6 +57,15 @@ const router = new VueRouter({
         title: '商品详情'
       },
       component: resolve => require(['@/components/main/show'], resolve)
+    },
+    {
+      path: 'register',
+      name: 'register',
+      meta: {
+        keepAlive: false,
+        title: '欢迎注册,bestcake!'
+      },
+      component: resolve => require(['@/components/main/register'], resolve)
     }
     ]
   }]

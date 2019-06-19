@@ -101,7 +101,7 @@ export default {
 }
 #app {
   width: 100%;
-  z-index: 1001;
+  z-index: 3;
   position: fixed;
   bottom: 0;
   left: 0;

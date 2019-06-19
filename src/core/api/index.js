@@ -2,17 +2,13 @@ import request from './http'
 
 // 引入全局参数
 import params from './params'
+
 var v_data = params.v // 拿到当前时间戳
-// ------------------------------------mock
-// var pox = '/apis'
-// import axios from 'axios'
-// import axios from '@/mock/mock'
-// 直接引入没有配置的axios,如下,发送一个get请求到/success
-// axios.get('/success').then((res) => {
-//   console.log(res)
-// })
+import mock from '@/mock/mock'
+
 // ------------------------------------mock
 var url01 = '/json1811.ashx'
+
 class Apis {
   // 轮播的接口
   GetBannerList (data) {
@@ -22,6 +18,7 @@ class Apis {
       params: data
     })
   }
+
   // icon接口
   GetIndexCakeList () {
     return request({
@@ -34,41 +31,44 @@ class Apis {
       }
     })
   }
+
   //  焦点图详情接口
   GetNSCakeByName (data) {
     return request({
-      method: "get",
+      method: 'get',
       url: url01,
       params: {
         Name: data.Name,
-        c: "NsCakeCenter",
-        m: "GetNSCakeByName",
+        c: 'NsCakeCenter',
+        m: 'GetNSCakeByName',
         v: v_data
       }
     })
   }
+
   // 魔发猜心以及部分品质甄选接口
-  // KSK 
+  // KSK
   GetCakeByName (data) {
     return request({
-      method: "get",
+      method: 'get',
       url: url01,
       params: {
         City: '苏州',
         ProName: data.ProName,
-        c: "Product",
-        m: "GetCakeByName",
+        c: 'Product',
+        m: 'GetCakeByName',
         v: v_data
       }
     })
   }
+
   // JZ  严选接口
   GetjzCakeInfo (data) {
     return request({
       method: 'get',
       url: url01,
       params: {
-        City: "苏州",
+        City: '苏州',
         ProName: data.Name,
         c: 'IndexCenter',
         m: 'GetjzCakeInfo',
@@ -76,6 +76,7 @@ class Apis {
       }
     })
   }
+
   //
   GetRuPCakeByName (data) {
     return request({
@@ -89,20 +90,22 @@ class Apis {
       }
     })
   }
+
   // 获取城市的接口
   GetPhotoLIst () {
     return request({
-      method: "get",
+      method: 'get',
       url: url01,
       params: {
-        c: "PhotoListCenter",
-        m: "GetPhotoLIst",
+        c: 'PhotoListCenter',
+        m: 'GetPhotoLIst',
         Type: 2,
         v: v_data,
         AdvertisingType: 1
       }
     })
   }
+
   // 分类页数据接口
   GetJdListNew () {
     return request({
@@ -113,6 +116,18 @@ class Apis {
         v: v_data,
         c: 'NsCakeCenter'
       }
+    })
+  }
+
+  login (data) {
+    return mock.post('/login', {
+      data
+    })
+  }
+
+  register (data) {
+    return mock.post('/register', {
+      data
     })
   }
 }

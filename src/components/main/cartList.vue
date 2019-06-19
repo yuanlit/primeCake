@@ -233,7 +233,7 @@ export default {
     },
     // 删除
     delAll() {
-      Store.clear();
+      Store.set("data",[]);
       let num1 = 0;
       let data = [];
       this.cart_data.forEach(ele => {
