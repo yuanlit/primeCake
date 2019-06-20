@@ -5,7 +5,7 @@
         <ul>
           <li v-for="(item, index) in cart_data" :key="index">
             <div class="l">
-              <input @click="option" type="checkbox" v-model="item.bool">
+              <input id="option" @click="option" type="checkbox" v-model="item.bool">
             </div>
             <div class="c">
               <img style="background:#fffff;" :src="item.url" alt>
@@ -165,6 +165,7 @@
 </template>
 <script>
 import Store from "storejs";
+import { Checklist } from "mint-ui";
 export default {
   data() {
     return {
@@ -233,7 +234,7 @@ export default {
     },
     // 删除
     delAll() {
-      Store.set("data",[]);
+      Store.set("data", []);
       let num1 = 0;
       let data = [];
       this.cart_data.forEach(ele => {
@@ -274,6 +275,10 @@ export default {
     //   background: #f1efef;
   }
 }
+// input {
+//   opacity: .6;
+//   outline: none;
+// }
 
 .cartList_box {
   box-sizing: border-box;
@@ -457,7 +462,7 @@ export default {
   box-sizing: border-box;
   position: fixed;
   bottom: 6.1vh;
-  z-index: 99;
+  z-index: 2;
   background: white;
   display: flex;
   div {

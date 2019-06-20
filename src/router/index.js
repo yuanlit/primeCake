@@ -66,6 +66,15 @@ const router = new VueRouter({
         title: '欢迎注册,bestcake!'
       },
       component: resolve => require(['@/components/main/register'], resolve)
+    },
+    {
+      path: 'userInfo',
+      name: 'userInfo',
+      meta: {
+        keepAlive: false,
+        title: '用户信息'
+      },
+      component: resolve => require(['@/components/main/userInfo'], resolve)
     }
     ]
   }]

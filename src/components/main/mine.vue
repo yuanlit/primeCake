@@ -2,6 +2,7 @@
   <div>
     <div class="login" v-if="loginNum == 0">
       <div class="login_box">
+        <div class="goBack" @click="goBack"> <<span>点击返回</span></div>
         <h1>欢迎登录，bestcake!</h1>
         <form>
           <p>
@@ -18,8 +19,9 @@
       </div>
     </div>
     <div class="pic_box">
-      <div class="pic" v-fileUpload="setInputFile">
-        点击可上传头像
+      <!--  v-fileUpload="setInputFile" -->
+      <div class="pic" @click="setInfo">
+        查看资料
         <img :src="url" alt>
       </div>
       <div class="uname">{{userInfo.username}}</div>
@@ -80,10 +82,6 @@ export default {
       loginNum: "",
       uname: "",
       upwd: "",
-      setInputFile: {
-        fn: "fileUpload",
-        multiple: false // 设置能否多张上传
-      },
       url: ""
     };
   },
@@ -132,6 +130,16 @@ export default {
           console.log(res.data.msg);
         }
       });
+    },
+    setInfo () {
+      this.$router.push({
+        path:'/userInfo'
+      })
+    },
+    goBack () {
+      this.$router.push({
+        path : '/index'
+      })
     }
   },
   beforeCreate() {},
@@ -141,6 +149,20 @@ export default {
 };
 </script>
 <style scoped lang='scss'>
+.goBack {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  font-weight: bolder;
+  font-size: 8vw;
+  color: white;
+  text-align: center;
+    span {
+      margin-left: 3vw;
+      color: rgb(71, 40, 40);
+      font-size: 5vw;
+    }
+}
 body,
 html {
   width: 100%;

@@ -18,7 +18,6 @@
 import Store from "storejs"
 var num = 1;
 export default {
-  name: "HelloWorld",
   data() {
     return {
       active: 8,

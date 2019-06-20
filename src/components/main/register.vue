@@ -15,9 +15,9 @@
           <p>
             性&nbsp;&nbsp;&nbsp;&nbsp;别:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label>男</label>
-            <input type="radio" name="sex">
+            <input type="radio" name="sex" v-model="checked" value="男">
             <label>女</label>
-            <input type="radio" name="sex">
+            <input type="radio" name="sex" v-model="checked" value="女">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </p>
           <p>
@@ -41,19 +41,24 @@ export default {
       upwd: "",
       usex: "",
       name: "",
-      sex: ""
+      sex: "",
+      checked:""
     };
   },
   methods: {
+    setSex (e) {
+      console.log(e.target.checked)
+    },
     register(e) {
       var data = {
         id: Math.random() * 10000,
         username: this.uname,
         password: this.upwd,
-        sex: this.sex,
+        sex: this.checked,
         avatar: "https://avatars0.githubusercontent.com/u/22588905?v=4&s=120",
         name: this.name
       };
+      console.log(data)
       this.$apis.register(data).then(res => {
         if (res.data.code === 0) {
           Toast({
