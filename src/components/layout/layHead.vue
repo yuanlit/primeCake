@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div id="app">
     <ul>
       <li v-for="(item,index) in nav" :key="index">
@@ -70,8 +70,6 @@ export default {
         });
         this.$store.state.N = num1;
       }
-      // let jsonData = window.localStorage.getItem('data');
-      // let oData = JSON.parse(jsonData);
     },
     change(index) {
       this.active = index;

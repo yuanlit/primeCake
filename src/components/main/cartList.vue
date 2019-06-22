@@ -190,7 +190,7 @@ export default {
       });
       this.optionList = selList;
     },
-    // 选择框
+    // 点击选中
     option() {
       var selList = [];
       setTimeout(() => {
@@ -200,7 +200,6 @@ export default {
             selList.push(item);
           }
         });
-        // vue.$set()
         this.optionList = selList;
       }, 80);
     },

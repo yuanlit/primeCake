@@ -33,6 +33,7 @@
     <div id="city">
       <div class="city" @click="xuan_city">{{this.$store.state.city}}</div>
     </div>
+    <!-- 以下为轮播图 -->
     <div class="banner">
       <mt-swipe :auto="4000">
         <mt-swipe-item v-for="(item, index) in bannerList" :key="index">
@@ -42,10 +43,10 @@
         </mt-swipe-item>
       </mt-swipe>
     </div>
-    <!-- 以上为轮播图 -->
+    <!--icon 图标-->
     <div class="banner-icon">
       <div class="icon-box" v-for="(item, index) in iconList" :key="index">
-        <a :href="item.ProUrl">
+        <a onclick="return false">
           <div class="icon-img">
             <img :src="item.ImgUrl">
           </div>

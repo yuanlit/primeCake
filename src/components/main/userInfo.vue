@@ -4,7 +4,7 @@
       <li>
         <div class="l">头像</div>
         <div class="r r_tou" v-fileUpload="setInputFile">
-          <img :src="url" alt>
+          <img :src="userInfo.avatar" alt>
         </div>
       </li>
       <li>
@@ -37,7 +37,6 @@ export default {
         fn: "fileUpload",
         multiple: false // 设置能否多张上传
       },
-      url: "",
       userInfo: ""
     };
   },
@@ -47,26 +46,22 @@ export default {
       Store.clear();
       this.$router.push({
         path: "/index"
-      });
+      })
     },
     fileUpload(url) {
       this.userInfo = Store.get("userInfo");
-      this.userInfo.pic = url;
+      this.userInfo.avatar = url;
       Store.set("userInfo", this.userInfo);
-      this.url = Store.get("userInfo").pic;
     },
     // 页面初始化
     pageInit() {
       if (!Store.get("userInfo")) {
         this.loginNum = 0;
       } else {
-        if (Store.get("userInfo").pic) {
-          this.url = Store.get("userInfo").pic;
-        }
+        this.url = Store.get("userInfo").avatar;
         this.userInfo = Store.get("userInfo");
         this.loginNum = 1;
       }
-      console.log(this.userInfo);
     }
   },
   mounted() {

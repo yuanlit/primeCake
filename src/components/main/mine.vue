@@ -22,7 +22,7 @@
       <!--  v-fileUpload="setInputFile" -->
       <div class="pic" @click="setInfo">
         查看资料
-        <img :src="url" alt>
+        <img :src="userInfo.avatar" alt>
       </div>
       <div class="uname">{{userInfo.username}}</div>
     </div>
@@ -82,7 +82,6 @@ export default {
       loginNum: "",
       uname: "",
       upwd: "",
-      url: ""
     };
   },
   methods: {
@@ -98,9 +97,6 @@ export default {
       if (!Store.get("userInfo")) {
         this.loginNum = 0;
       } else {
-        if (Store.get("userInfo").pic) {
-          this.url = Store.get("userInfo").pic;
-        }
         this.userInfo = Store.get("userInfo");
         this.loginNum = 1;
       }
@@ -126,8 +122,9 @@ export default {
           this.loginNum = 1;
           this.userInfo = res.data.data;
           Store.set("userInfo", this.userInfo);
+          this.pageInit();
         } else {
-          console.log(res.data.msg);
+          // console.log(res.data.msg);
         }
       });
     },
@@ -142,9 +139,8 @@ export default {
       })
     }
   },
-  beforeCreate() {},
   mounted() {
-    this.pageInit();
+    this.pageInit()
   }
 };
 </script>
@@ -244,7 +240,7 @@ h1 {
   margin: 0;
   padding: 0;
   position: absolute;
-  top: 30vh;
+  top: 16vh;
 }
 // 动画
 @keyframes myfirst {

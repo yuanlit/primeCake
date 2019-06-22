@@ -2,6 +2,7 @@
   <div>
     <div class="login">
       <div class="login_box">
+        <div class="goBack" @click="goBack"> <<span>点击返回</span></div>
         <h1>欢迎来到，bestcake!</h1>
         <form>
           <p>
@@ -46,9 +47,6 @@ export default {
     };
   },
   methods: {
-    setSex (e) {
-      console.log(e.target.checked)
-    },
     register(e) {
       var data = {
         id: Math.random() * 10000,
@@ -57,32 +55,46 @@ export default {
         sex: this.checked,
         avatar: "https://avatars0.githubusercontent.com/u/22588905?v=4&s=120",
         name: this.name
-      };
-      console.log(data)
+      }
       this.$apis.register(data).then(res => {
-        if (res.data.code === 0) {
+        if (res.data.code !== 1) {
           Toast({
-            message: "用户名或密码错误!",
+            message: res.data.msg,
             position: "bottom",
             duration: 1000
           });
         } else if (res.data.code === 1) {
-          console.log("成功")
           MessageBox.confirm("注册成功!,是否立即登录?").then(action => {
             this.$router.push({
               path: "/mine",
-              // query: data
-            });
-          });
-        } else {
-          console.log(res.data.msg);
+            })
+          })
         }
-      });
+      })
+    },
+    goBack () {
+      this.$router.push({
+        path : '/index'
+      })
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.goBack {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  font-weight: bolder;
+  font-size: 8vw;
+  color: white;
+  text-align: center;
+    span {
+      margin-left: 3vw;
+      color: rgb(71, 40, 40);
+      font-size: 5vw;
+    }
+}
 .login {
   overflow: hidden;
   height: 100vh;
@@ -105,7 +117,6 @@ export default {
       p {
         margin: 3vw;
       }
-
       button {
         margin: 4vw;
       }
@@ -117,7 +128,7 @@ h1 {
   padding: 0;
   color: #a8208b;
   position: absolute;
-  top: 25vh;
+  top: 16vh;
 }
 </style>
 
